@@ -1,10 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/_mainLayout">
 
-</body>
-</html>
+<div layout:fragment="content" class="container mt-5 animate__animated animate__fadeIn">
+    <h1 class="mb-4 display-6 text-danger animate__animated animate__fadeInDown">Eliminar Contacto</h1>
+    <h3 class="text-muted animate__animated animate__fadeInUp">¿Está seguro que desea eliminar este registro?</h3>
+    <div class="card shadow-sm mt-4 animate__animated animate__zoomIn">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3 text-primary">ID</dt>
+                <dd class="col-sm-9" th:text="${contacto.id}"></dd>
+
+                <dt class="col-sm-3 text-primary">Nombre</dt>
+                <dd class="col-sm-9" th:text="${contacto.nombre}"></dd>
+
+                <dt class="col-sm-3 text-primary">Número</dt>
+                <dd class="col-sm-9" th:text="${contacto.numero}"></dd>
+
+                <dt class="col-sm-3 text-primary">Email</dt>
+                <dd class="col-sm-9" th:text="${contacto.email}"></dd>
+            </dl>
+        </div>
+    </div>
+
+    <form th:action="@{/contactos/delete}" method="post" class="mt-4 d-flex align-items-center animate__animated animate__fadeInUp">
+        <input type="hidden" name="Id" th:value="${contacto.id}">
+        <button type="submit" class="btn btn-danger shadow-sm rounded-pill me-3 animate__animated animate__shakeX">Eliminar</button>
+        <a th:href="@{/contactos}" class="btn btn-outline-secondary shadow-sm rounded-pill">Regresar</a>
+    </form>
+</div>
+
+<!-- Agrega los estilos CSS y las animaciones de Animate.css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<style>
+    .card {
+        border-radius: 1rem;
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .btn {
+        transition: transform 0.3s ease;
+    }
+
+    .btn:hover {
+        transform: translateY(-3px);
+    }
+
+    .animate__animated {
+        animation-duration: 0.5s;
+        animation-delay: 0.2s;
+    }
+</style>

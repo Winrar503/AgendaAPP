@@ -1,37 +1,60 @@
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="/layouts/_mainLayout">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/_mainLayout">
 
-<div layout:fragment="content">
-    <h1>Crear nuevo contacto</h1>
+<div layout:fragment="content" class="container mt-5">
+    <h1 class="display-6 text-dark">Agregar Nuevo Contacto</h1>
+
     <form th:action="@{/contactos/save}" th:object="${contacto}" method="post">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del contacto" required>
-                </div>
-            </div>
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" id="nombre" th:field="*{nombre}" class="form-control" required />
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="numero">Número Telefónico</label>
-                    <input type="tel" class="form-control" th:field="*{numero}" id="numero" placeholder="Escriba el número telefónico" required>
-                </div>
-            </div>
+        <div class="mb-3">
+            <label for="numero" class="form-label">Número</label>
+            <input type="text" id="numero" th:field="*{numero}" class="form-control" required />
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" th:field="*{email}" id="email" placeholder="Escriba el correo electrónico" required>
-                </div>
-            </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" th:field="*{email}" class="form-control" />
         </div>
-        <hr>
-        <button type="submit" class="btn btn-primary">Guardar</button> |
-        <a th:href="@{/contactos}">Regresar</a>
+        <div class="mb-3">
+            <label for="categoria" class="form-label">Categoría</label>
+            <select id="categoria" name="categoriaId" class="form-select" required>
+                <option value="" disabled selected>Selecciona una categoría</option>
+                <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+<div class="d-flex justify-content-start">
+            <button type="submit" class="btn btn-primary shadow-sm rounded-pill me-3 animate__animated animate__bounceIn">Guardar</button>
+            <a th:href="@{/contactos}" class="btn btn-outline-secondary shadow-sm rounded-pill animate__animated animate__bounceIn">Regresar</a>
+        </div>
     </form>
 </div>
+
+<!-- Agrega los estilos CSS y las animaciones de Animate.css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<style>
+    .form-control {
+        border-radius: 0.5rem;
+        transition: box-shadow 0.3s ease;
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        border-color: #007bff;
+    }
+
+    .btn {
+        transition: transform 0.3s ease;
+    }
+
+    .btn:hover {
+        transform: translateY(-3px);
+    }
+
+    .animate__animated {
+        animation-duration: 0.5s;
+        animation-delay: 0.2s;
+    }
+</style>

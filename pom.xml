@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>org.darwin</groupId>
-	<artifactId>AttendanceApp</artifactId>
+	<artifactId>AgendaApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>AttendanceApp</name>
+	<name>AgendaApp</name>
 	<description>Proyecto de ejemplo para aprender a trabajar con Spring Boot</description>
 	<url/>
 	<licenses>
@@ -86,6 +86,15 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.34</version>
+			<scope>provided</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>

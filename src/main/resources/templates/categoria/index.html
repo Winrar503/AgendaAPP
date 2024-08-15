@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content" class="container mt-5">
+    <div th:if="${msg != null}">
+        <script>
+            Swal.fire({
+                title: "Confirmación",
+                text: '[[${msg}]]',
+                icon: "success"
+            });
+        </script>
+    </div>
+
+    <div th:if="${error != null}">
+        <script>
+            Swal.fire({
+                title: "Error",
+                text: '[[${error}]]',
+                icon: "error"
+            });
+        </script>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-6 text-dark">Listado de Categorías</h1>
+        <a th:href="@{/categorias/create}" class="btn btn-primary btn-lg">Nueva Categoría</a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4" th:each="categoria : ${categorias}">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h5 th:text="${categoria.nombre}"></h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Contactos:</strong></p>
+                    <ul class="list-group">
+                        <li class="list-group-item" th:each="contacto : ${categoria.contactos}" th:text="${contacto.nombre}"></li>
+                    </ul>
+                    <a th:href="@{/categorias/details/{id}(id=${categoria.id})}" class="btn btn-secondary btn-sm mt-2">Detalles</a>
+                    <a th:href="@{/categorias/edit/{id}(id=${categoria.id})}" class="btn btn-info btn-sm mt-2">Editar</a>
+                    <a th:href="@{/categorias/remove/{id}(id=${categoria.id})}" class="btn btn-danger btn-sm mt-2">Eliminar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                <a class="page-link" th:href="@{|/categorias?page=${pageNumber}|}" th:text="${pageNumber}"></a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<style>
+    .card {
+        border-radius: 1rem;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .list-group-item {
+        border: none;
+        padding: 0.5rem 0;
+    }
+</style>
