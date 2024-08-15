@@ -1,10 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
 
-</body>
+<div layout:fragment="content" class="container mt-5 animate__animated animate__fadeIn">
+    <h1 class="display-6 text-primary animate__animated animate__fadeInDown">Crear nuevo docente</h1>
+
+    <div class="card shadow-lg p-4 mt-4 rounded-lg animate__animated animate__fadeInUp">
+        <div class="card-body">
+            <form th:action="@{/categorias/save}" th:object="${categoria}" method="post">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="nombre" class="form-label">Nombre del Docente</label>
+                            <input type="text" id="nombre" th:field="*{nombre}" class="form-control shadow-sm rounded-pill" placeholder="Escriba el nombre del docente" required>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-start align-items-center">
+                    <button type="submit" class="btn btn-primary shadow-sm rounded-pill me-3">Guardar</button>
+                    <a th:href="@{/categorias}" class="btn btn-outline-secondary shadow-sm rounded-pill">Regresar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Estilos CSS y animaciones de Animate.css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<style>
+    .card {
+        border-radius: 1rem;
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .form-control {
+        transition: box-shadow 0.3s ease;
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    }
+
+    .btn {
+        transition: transform 0.3s ease;
+    }
+
+    .btn:hover {
+        transform: translateY(-3px);
+    }
+
+    .animate__animated {
+        animation-duration: 0.5s;
+        animation-delay: 0.2s;
+    }
+</style>
 </html>

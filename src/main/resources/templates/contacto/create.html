@@ -17,15 +17,20 @@
             <label for="email" class="form-label">Email</label>
             <input type="email" id="email" th:field="*{email}" class="form-control" />
         </div>
-        <div class="mb-3">
-            <label for="categoria" class="form-label">Categoría</label>
-            <select id="categoria" name="categoriaId" class="form-select" required>
-                <option value="" disabled selected>Selecciona una categoría</option>
-                <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
-            </select>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="categoria">Categoria</label>
+                    <select class="form-control" th:field="*{categoria.id}" id="categoria" required>
+                        <option value="" disabled selected>Selecciona una categoria</option>
+                        <option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nombre}"></option>
+                    </select>
+                </div>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Guardar</button>
-<div class="d-flex justify-content-start">
+
+        <div class="d-flex justify-content-start">
             <button type="submit" class="btn btn-primary shadow-sm rounded-pill me-3 animate__animated animate__bounceIn">Guardar</button>
             <a th:href="@{/contactos}" class="btn btn-outline-secondary shadow-sm rounded-pill animate__animated animate__bounceIn">Regresar</a>
         </div>

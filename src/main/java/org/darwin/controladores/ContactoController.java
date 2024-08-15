@@ -1,6 +1,7 @@
 package org.darwin.controladores;
 
 import org.darwin.modelos.Contacto;
+import org.darwin.servicios.implementaciones.CategoriaService;
 import org.darwin.servicios.interfaces.IContactoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,8 @@ import java.util.stream.IntStream;
 public class ContactoController {
     @Autowired
     private IContactoService contactoService;
+    @Autowired
+    private CategoriaService categoriaService;
 
     @GetMapping
     public String index(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size){
@@ -44,8 +47,9 @@ public class ContactoController {
     }
 
     @GetMapping("/create")
-    public String create(Contacto contacto){
-
+    public String create(Model model){
+        model.addAttribute("contacto", new Contacto());
+        model.addAttribute("categorias", categoriaService.obtenerTodos());
         return "contacto/create";
     }
 
@@ -61,11 +65,12 @@ public class ContactoController {
         attributes.addFlashAttribute("msg", "Contacto creado correctamente");
         return "redirect:/contactos";
     }
-
+    //Controlador modificado temporalmente, si funciona lo dejo asi xd
     @GetMapping("/details/{id}")
     public String details(@PathVariable("id") Integer id, Model model){
         Contacto contacto = contactoService.buscarPorId(id).get();
         model.addAttribute("contacto", contacto);
+        model.addAttribute("categorias", categoriaService.obtenerTodos());
         return "contacto/details";
     }
 
@@ -73,8 +78,9 @@ public class ContactoController {
     public String edit(@PathVariable("id") Integer id, Model model){
         Contacto contacto = contactoService.buscarPorId(id).get();
         model.addAttribute("contacto", contacto);
+        model.addAttribute("categorias", categoriaService.obtenerTodos());
         return "contacto/edit";
-    }
+    } 
 
     @GetMapping("/remove/{id}")
     public String remove(@PathVariable("id") Integer id, Model model){
@@ -87,6 +93,6 @@ public class ContactoController {
     public String delete(Contacto contacto, RedirectAttributes attributes){
         contactoService.eliminarPorId(contacto.getId());
         attributes.addFlashAttribute("msg", "contacto eliminado correctamente");
-        return "redirect:/contacto";
+        return "redirect:/contactos";
     }
 }

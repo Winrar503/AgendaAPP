@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/_mainLayout">
 
 <div layout:fragment="content" class="container mt-5 animate__animated animate__fadeIn">
-    <h1 class="mb-4 display-6 text-primary animate__animated animate__fadeInDown">Editar contacto</h1>
+    <h1 class="mb-4 display-6 text-primary animate__animated animate__fadeInDown">Detalles del contacto</h1>
 
     <div class="card shadow-lg p-4 rounded-lg animate__animated animate__fadeInUp">
         <div class="card-body">
@@ -24,8 +24,12 @@
                     <input type="tel" class="form-control" th:field="*{numero}" id="numero" placeholder="Escriba el número telefónico del contacto" required>
                 </div>
 
+                <div class="mb-3">
+                    <h5 class="text-muted">Categoría:</h5>
+                    <p class="form-control bg-light" th:text="${contacto.categoria.nombre}">Categoría del contacto</p>
+                </div>
+
                 <div class="mt-4 d-flex align-items-center">
-                    <button type="submit" class="btn btn-primary shadow-sm rounded-pill me-3">Guardar Cambios</button>
                     <a th:href="@{/contactos}" class="btn btn-outline-secondary shadow-sm rounded-pill">Regresar</a>
                 </div>
             </form>

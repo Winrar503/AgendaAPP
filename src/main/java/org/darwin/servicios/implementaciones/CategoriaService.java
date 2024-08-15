@@ -16,6 +16,7 @@ public class CategoriaService implements ICategoriaService {
     @Autowired
     private ICategoriaRepository categoriaRepository;
 
+
     @Override
     public Page<Categoria> buscarTodosPaginados(Pageable pageable) {
         return categoriaRepository.findAll(pageable);

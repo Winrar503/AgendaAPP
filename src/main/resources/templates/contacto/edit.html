@@ -6,7 +6,7 @@
 
   <div class="card shadow-lg p-4 rounded-lg animate__animated animate__fadeInUp">
     <div class="card-body">
-      <form th:action="@{/contactos/update}" th:object="${contacto}" method="post">
+      <form th:action="@{/contactos/save}" th:object="${contacto}" method="post">
         <input type="hidden" th:field="*{id}">
 
         <div class="form-group mb-3">
@@ -23,6 +23,23 @@
           <label for="email" class="form-label">Email</label>
           <input type="email" class="form-control" th:field="*{email}" id="email" placeholder="Escriba el correo electrónico" required>
         </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="categoria">Categoria</label>
+              <select class="form-control" th:field="*{categoria.id}" id="categoria" required>
+                <option value="" disabled>Selecciona una categoria</option>
+                <option th:each="c : ${categorias}"
+                        th:value="${c.id}"
+                        th:selected="${c.id} == *{categoria.id}"
+                        th:text="${c.nombre}">
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
 
         <div class="mt-4 d-flex align-items-center">
           <button type="submit" class="btn btn-primary shadow-sm rounded-pill me-3">Guardar Cambios</button>
