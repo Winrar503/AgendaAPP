@@ -38,8 +38,8 @@
                     <ul class="list-group">
                         <li class="list-group-item" th:each="contacto : ${categoria.contactos}" th:text="${contacto.nombre}"></li>
                     </ul>
-                    <a th:href="@{/categorias/details/{id}(id=${categoria.id})}" class="btn btn-secondary btn-sm mt-2">Detalles</a>
-                    <a th:href="@{/categorias/edit/{id}(id=${categoria.id})}" class="btn btn-info btn-sm mt-2">Editar</a>
+<!--                    <a th:href="@{/categorias/details/{id}(id=${categoria.id})}" class="btn btn-secondary btn-sm mt-2">Detalles</a>-->
+<!--                    <a th:href="@{/categorias/edit/{id}(id=${categoria.id})}" class="btn btn-info btn-sm mt-2">Editar</a>-->
                     <a th:href="@{/categorias/remove/{id}(id=${categoria.id})}" class="btn btn-danger btn-sm mt-2">Eliminar</a>
                 </div>
             </div>

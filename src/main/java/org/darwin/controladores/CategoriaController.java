@@ -64,19 +64,19 @@ public class CategoriaController {
     }
 
 
-    @GetMapping("/details/{id}")
-    public String details(@PathVariable("id") Integer id, Model model){
-        Categoria categoria = categoriaService.buscarPorId(id).get();
-        model.addAttribute("categoria", categoria);
-        return "categoria/details";
-    }
+//    @GetMapping("/details/{id}")
+//    public String details(@PathVariable("id") Integer id, Model model){
+//        Categoria categoria = categoriaService.buscarPorId(id).get();
+//        model.addAttribute("categoria", categoria);
+//        return "categoria/details";
+//    }
 
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, Model model){
-        Categoria categoria = categoriaService.buscarPorId(id).get();
-        model.addAttribute("categoria", categoria);
-        return "categoria/edit";
-    }
+//    @GetMapping("/edit/{id}")
+//    public String edit(@PathVariable("id") Integer id, Model model){
+//        Categoria categoria = categoriaService.buscarPorId(id).get();
+//        model.addAttribute("categoria", categoria);
+//        return "categoria/edit";
+//    }
 
     @GetMapping("/remove/{id}")
     public String remove(@PathVariable("id") Integer id, Model model){

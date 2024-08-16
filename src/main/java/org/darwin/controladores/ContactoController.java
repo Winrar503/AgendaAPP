@@ -80,7 +80,7 @@ public class ContactoController {
         model.addAttribute("contacto", contacto);
         model.addAttribute("categorias", categoriaService.obtenerTodos());
         return "contacto/edit";
-    } 
+    }
 
     @GetMapping("/remove/{id}")
     public String remove(@PathVariable("id") Integer id, Model model){
