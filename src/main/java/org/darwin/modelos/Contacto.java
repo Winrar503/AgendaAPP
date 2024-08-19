@@ -8,7 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -35,5 +37,20 @@ public class Contacto {
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
+    // Relación con Notas
+    @OneToMany(mappedBy = "contacto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Nota> notas = new ArrayList<>();
+
+    // Método para agregar una nota
+    public void addNota(Nota nota) {
+        notas.add(nota);
+        nota.setContacto(this);
+    }
+
+    // Método para remover una nota
+    public void removeNota(Nota nota) {
+        notas.remove(nota);
+        nota.setContacto(null);
+    }
 
 }

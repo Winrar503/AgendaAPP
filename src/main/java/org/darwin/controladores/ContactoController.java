@@ -1,8 +1,11 @@
 package org.darwin.controladores;
 
 import org.darwin.modelos.Contacto;
+import org.darwin.modelos.Nota;
 import org.darwin.servicios.implementaciones.CategoriaService;
+import org.darwin.servicios.implementaciones.NotaService;
 import org.darwin.servicios.interfaces.IContactoService;
+import org.darwin.servicios.interfaces.INotaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +28,8 @@ public class ContactoController {
     private IContactoService contactoService;
     @Autowired
     private CategoriaService categoriaService;
+    @Autowired
+    private NotaService notaService;
 
 
     @GetMapping
@@ -51,6 +56,7 @@ public class ContactoController {
     public String create(Model model){
         model.addAttribute("contacto", new Contacto());
         model.addAttribute("categorias", categoriaService.obtenerTodos());
+        model.addAttribute("notas", notaService.obtenerTodos());
         return "contacto/create";
     }
 
@@ -72,6 +78,7 @@ public class ContactoController {
         Contacto contacto = contactoService.buscarPorId(id).get();
         model.addAttribute("contacto", contacto);
         model.addAttribute("categorias", categoriaService.obtenerTodos());
+        model.addAttribute("notas", notaService.obtenerTodos());
         return "contacto/details";
     }
 
@@ -80,6 +87,7 @@ public class ContactoController {
         Contacto contacto = contactoService.buscarPorId(id).get();
         model.addAttribute("contacto", contacto);
         model.addAttribute("categorias", categoriaService.obtenerTodos());
+        model.addAttribute("notas", notaService.obtenerTodos());
         return "contacto/edit";
     }
 
@@ -96,4 +104,40 @@ public class ContactoController {
         attributes.addFlashAttribute("msg", "contacto eliminado correctamente");
         return "redirect:/contactos";
     }
+
+
+//    // Nuevo método para manejar las notas
+//    @GetMapping("/{contactoId}/addNote")
+//    public String addNoteForm(@PathVariable("contactoId") Integer contactoId, Model model) {
+//        Contacto contacto = contactoService.buscarPorId(contactoId).orElse(null);
+//        if (contacto == null) {
+//            return "redirect:/contactos";
+//        }
+//
+//        Nota nota = new Nota();
+//        nota.setContacto(contacto);
+//
+//        model.addAttribute("nota", nota);
+//        return "nota/addNote";  // Formulario para agregar la nota
+//    }
+//
+//    @PostMapping("/{contactoId}/addNote")
+//    public String addNote(@PathVariable("contactoId") Integer contactoId, @ModelAttribute Nota nota, BindingResult result, RedirectAttributes attributes) {
+//        Contacto contacto = contactoService.buscarPorId(contactoId).orElse(null);
+//        if (contacto == null) {
+//            return "redirect:/contactos";
+//        }
+//
+//        if (result.hasErrors()) {
+//            attributes.addFlashAttribute("error", "No se pudo agregar la nota debido a un error.");
+//            return "redirect:/contactos";
+//        }
+//
+//        contacto.addNota(nota);
+//        contactoService.crearOEditar(contacto);  // Guardar el contacto con la nueva nota
+//
+//        attributes.addFlashAttribute("msg", "Nota agregada correctamente");
+//        return "redirect:/contactos/details/" + contactoId;
+//    }
+
 }
