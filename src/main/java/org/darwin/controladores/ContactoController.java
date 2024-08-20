@@ -1,11 +1,9 @@
 package org.darwin.controladores;
 
 import org.darwin.modelos.Contacto;
-import org.darwin.modelos.Nota;
 import org.darwin.servicios.implementaciones.CategoriaService;
 import org.darwin.servicios.implementaciones.NotaService;
 import org.darwin.servicios.interfaces.IContactoService;
-import org.darwin.servicios.interfaces.INotaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
