@@ -24,6 +24,33 @@
             <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
         </div>
     </form>
+
+    <label for="switch" class="switch">
+        <input id="switch" type="checkbox" />
+        <span class="slider"></span>
+        <span class="decoration"></span>
+    </label>
+
+    <script>
+        const toggleButton = document.getElementById('switch');
+        toggleButton.addEventListener('change', () => {
+            const isChecked = toggleButton.checked;
+            const theme = isChecked ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        });
+
+        // Aplica el tema guardado al cargar la página
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            toggleButton.checked = true;
+        }
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+
+
+
+
     <!-- Navbar-->
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
@@ -72,6 +99,7 @@
                 </div>
             </div>
         </main>
+
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-between small">
