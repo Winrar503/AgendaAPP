@@ -22,4 +22,5 @@ public class Nota {
     @ManyToOne
     @JoinColumn(name = "contacto_id", nullable = false)
     private Contacto contacto;
+
 }

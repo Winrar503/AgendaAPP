@@ -10,6 +10,7 @@
     <div class="card shadow-lg p-4 mt-4 rounded-lg animate__animated animate__fadeInUp">
         <div class="card-body">
             <form th:action="@{/notas/save}" th:object="${nota}" method="post">
+                <input type="hidden" name="contactoId" th:value="${contacto.id}"> <!--enlasar el id del contacto-->
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <div class="form-group">

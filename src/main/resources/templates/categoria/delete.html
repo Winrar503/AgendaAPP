@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/_mainLayout">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Categoría</title>
+    <!-- Enlaza a Animate.css para animaciones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- Enlaza al CSS personalizado -->
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="container mt-5 animate__animated animate__fadeIn">
+    <h1 class="display-6 text-danger animate__animated animate__fadeInDown">Eliminar Categoría</h1>
+    <h3 class="text-muted animate__animated animate__fadeInUp">¿Está seguro que desea eliminar esta categoría?</h3>
 
-<div layout:fragment="content" class="container mt-5 animate__animated animate__fadeIn">
-    <h1 class="mb-4 display-6 text-danger animate__animated animate__fadeInDown">Eliminar Categoria</h1>
-    <h3 class="text-muted animate__animated animate__fadeInUp">¿Está seguro que desea eliminar esta categoria?</h3>
-    <div class="card shadow-sm mt-4 animate__animated animate__zoomIn">
+    <div class="card shadow-lg mt-4 rounded-lg animate__animated animate__zoomIn">
         <div class="card-body">
             <dl class="row">
                 <dt class="col-sm-3 text-primary">Nombre</dt>
@@ -19,29 +29,143 @@
         <a th:href="@{/categorias}" class="btn btn-outline-secondary shadow-sm rounded-pill">Regresar</a>
     </form>
 </div>
+</body>
+</html>
 
-<!-- Agrega los estilos CSS y las animaciones de Animate.css -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f7f9;
+        color: #333;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        color: #dc3545;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+        color: #6c757d;
+    }
+
     .card {
         border-radius: 1rem;
-        transition: transform 0.3s ease;
+        background: #ffffff;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .card:hover {
-        transform: translateY(-5px);
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .row dt {
+        font-weight: bold;
+        color: #007bff;
     }
 
     .btn {
-        transition: transform 0.3s ease;
+        padding: 10px 20px;
+        border-radius: 30px;
+        border: 2px solid #007bff;
+        background-color: #ffffff;
+        color: #007bff;
+        font-weight: bold;
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
     }
 
     .btn:hover {
+        background-color: #007bff;
+        color: #ffffff;
         transform: translateY(-3px);
+    }
+
+    .mt-5 {
+        margin-top: 3rem;
+    }
+
+    .mt-4 {
+        margin-top: 1.5rem;
+    }
+
+    .shadow-lg {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .shadow-sm {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .rounded-lg {
+        border-radius: 0.5rem;
+    }
+
+    .rounded-pill {
+        border-radius: 50rem;
     }
 
     .animate__animated {
         animation-duration: 0.5s;
         animation-delay: 0.2s;
     }
+
 </style>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/_mainLayout">-->
+
+<!--<div layout:fragment="content" class="container mt-5 animate__animated animate__fadeIn">-->
+<!--    <h1 class="mb-4 display-6 text-danger animate__animated animate__fadeInDown">Eliminar Categoria</h1>-->
+<!--    <h3 class="text-muted animate__animated animate__fadeInUp">¿Está seguro que desea eliminar esta categoria?</h3>-->
+<!--    <div class="card shadow-sm mt-4 animate__animated animate__zoomIn">-->
+<!--        <div class="card-body">-->
+<!--            <dl class="row">-->
+<!--                <dt class="col-sm-3 text-primary">Nombre</dt>-->
+<!--                <dd class="col-sm-9" th:text="${categoria.nombre}"></dd>-->
+<!--            </dl>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <form th:action="@{/categorias/delete}" method="post" class="mt-4 d-flex align-items-center animate__animated animate__fadeInUp">-->
+<!--        <input type="hidden" name="Id" th:value="${categoria.id}">-->
+<!--        <button type="submit" class="btn btn-danger shadow-sm rounded-pill me-3 animate__animated animate__shakeX">Eliminar</button>-->
+<!--        <a th:href="@{/categorias}" class="btn btn-outline-secondary shadow-sm rounded-pill">Regresar</a>-->
+<!--    </form>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Agrega los estilos CSS y las animaciones de Animate.css &ndash;&gt;-->
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />-->
+<!--<style>-->
+<!--    .card {-->
+<!--        border-radius: 1rem;-->
+<!--        transition: transform 0.3s ease;-->
+<!--    }-->
+
+<!--    .card:hover {-->
+<!--        transform: translateY(-5px);-->
+<!--    }-->
+
+<!--    .btn {-->
+<!--        transition: transform 0.3s ease;-->
+<!--    }-->
+
+<!--    .btn:hover {-->
+<!--        transform: translateY(-3px);-->
+<!--    }-->
+
+<!--    .animate__animated {-->
+<!--        animation-duration: 0.5s;-->
+<!--        animation-delay: 0.2s;-->
+<!--    }-->
+<!--</style>-->

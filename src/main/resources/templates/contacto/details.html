@@ -1,8 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/_mainLayout">
-
-<div layout:fragment="content" class="container mt-5 animate__animated animate__fadeIn">
-    <h1 class="mb-4 display-6 text-primary animate__animated animate__fadeInDown">Detalles del contacto</h1>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Contacto</title>
+    <!-- Enlaza a Animate.css para animaciones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- Enlaza al CSS personalizado -->
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="container mt-5 animate__animated animate__fadeIn">
+    <h1 class="mb-4 display-6 text-primary animate__animated animate__fadeInDown">Detalles del Contacto</h1>
 
     <div class="card shadow-lg p-4 rounded-lg animate__animated animate__fadeInUp">
         <div class="card-body">
@@ -10,17 +19,17 @@
                 <input type="hidden" th:field="*{id}">
 
                 <div class="form-group mb-3">
-                    <label for="nombre" class="form-label">Nombre del contacto</label>
+                    <label for="nombre" class="form-label">Nombre del Contacto</label>
                     <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del contacto" required>
                 </div>
 
                 <div class="form-group mb-3">
-                    <label for="email" class="form-label">Email del contacto</label>
+                    <label for="email" class="form-label">Email del Contacto</label>
                     <input type="email" class="form-control" th:field="*{email}" id="email" placeholder="Escriba el correo electrónico del contacto" required>
                 </div>
 
                 <div class="form-group mb-3">
-                    <label for="numero" class="form-label">Número Telefónico del contacto</label>
+                    <label for="numero" class="form-label">Número Telefónico del Contacto</label>
                     <input type="tel" class="form-control" th:field="*{numero}" id="numero" placeholder="Escriba el número telefónico del contacto" required>
                 </div>
 
@@ -29,6 +38,8 @@
                     <p class="form-control bg-light" th:text="${contacto.categoria.nombre}">Categoría del contacto</p>
                 </div>
 
+
+
                 <div class="mt-4 d-flex align-items-center">
                     <a th:href="@{/contactos}" class="btn btn-outline-secondary shadow-sm rounded-pill">Regresar</a>
                 </div>
@@ -36,30 +47,146 @@
         </div>
     </div>
 </div>
-
-<!-- Estilos CSS y animaciones de Animate.css -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+</body>
+</html>
 <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f7f9;
+        color: #333;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        color: #007bff;
+    }
+
     .card {
-        border-radius: 1rem;
-        transition: transform 0.3s ease;
+        border-radius: 15px;
+        background: #ffffff;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .card:hover {
-        transform: translateY(-5px);
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .form-label {
+        font-weight: bold;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+        padding: 10px;
     }
 
     .btn {
-        transition: transform 0.3s ease;
+        padding: 10px 20px;
+        border-radius: 30px;
+        border: 2px solid #007bff;
+        background-color: #ffffff;
+        color: #007bff;
+        font-weight: bold;
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .btn:hover {
-        transform: translateY(-3px);
+        background-color: #007bff;
+        color: #ffffff;
     }
 
-    .animate__animated {
-        animation-duration: 0.5s;
-        animation-delay: 0.2s;
+    .bg-light {
+        background-color: #f8f9fa !important;
     }
+
+    .text-muted {
+        color: #6c757d;
+    }
+
+    .mt-4 {
+        margin-top: 1.5rem;
+    }
+
+    .mb-4 {
+        margin-bottom: 1.5rem;
+    }
+
 </style>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/_mainLayout">-->
+
+<!--<div layout:fragment="content" class="container mt-5 animate__animated animate__fadeIn">-->
+<!--    <h1 class="mb-4 display-6 text-primary animate__animated animate__fadeInDown">Detalles del contacto</h1>-->
+
+<!--    <div class="card shadow-lg p-4 rounded-lg animate__animated animate__fadeInUp">-->
+<!--        <div class="card-body">-->
+<!--            <form th:action="@{/contactos/update}" th:object="${contacto}" method="post">-->
+<!--                <input type="hidden" th:field="*{id}">-->
+
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="nombre" class="form-label">Nombre del contacto</label>-->
+<!--                    <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del contacto" required>-->
+<!--                </div>-->
+
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="email" class="form-label">Email del contacto</label>-->
+<!--                    <input type="email" class="form-control" th:field="*{email}" id="email" placeholder="Escriba el correo electrónico del contacto" required>-->
+<!--                </div>-->
+
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="numero" class="form-label">Número Telefónico del contacto</label>-->
+<!--                    <input type="tel" class="form-control" th:field="*{numero}" id="numero" placeholder="Escriba el número telefónico del contacto" required>-->
+<!--                </div>-->
+
+<!--                <div class="mb-3">-->
+<!--                    <h5 class="text-muted">Categoría:</h5>-->
+<!--                    <p class="form-control bg-light" th:text="${contacto.categoria.nombre}">Categoría del contacto</p>-->
+<!--                </div>-->
+
+<!--                <div class="mt-4 d-flex align-items-center">-->
+<!--                    <a th:href="@{/contactos}" class="btn btn-outline-secondary shadow-sm rounded-pill">Regresar</a>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Estilos CSS y animaciones de Animate.css &ndash;&gt;-->
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />-->
+<!--<style>-->
+<!--    .card {-->
+<!--        border-radius: 1rem;-->
+<!--        transition: transform 0.3s ease;-->
+<!--    }-->
+
+<!--    .card:hover {-->
+<!--        transform: translateY(-5px);-->
+<!--    }-->
+
+<!--    .btn {-->
+<!--        transition: transform 0.3s ease;-->
+<!--    }-->
+
+<!--    .btn:hover {-->
+<!--        transform: translateY(-3px);-->
+<!--    }-->
+
+<!--    .animate__animated {-->
+<!--        animation-duration: 0.5s;-->
+<!--        animation-delay: 0.2s;-->
+<!--    }-->
+<!--</style>-->
 

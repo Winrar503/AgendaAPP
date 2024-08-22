@@ -3,7 +3,6 @@ package org.darwin.controladores;
 
 import org.darwin.modelos.Contacto;
 import org.darwin.modelos.Nota;
-import org.darwin.servicios.implementaciones.ContactoService;
 import org.darwin.servicios.interfaces.IContactoService;
 import org.darwin.servicios.interfaces.INotaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +48,7 @@ public class NotaController {
         return "nota/index";
     }
 
-    @GetMapping("/create")
+    @GetMapping("/create/{id}")
     public String create(Nota nota, @PathVariable("id") Integer id, Model model) {
         Contacto contacto = contactoService.buscarPorId(id).get();
         model.addAttribute("contacto", contacto);
@@ -57,16 +56,20 @@ public class NotaController {
     }
 
     @PostMapping("/save")
-    public String save(Nota nota, BindingResult result, Model model, RedirectAttributes attributes) {
+    public String save(Nota nota, @RequestParam("contactoId") Integer contactoId, BindingResult result, Model model, RedirectAttributes attributes) {
         if(result.hasErrors()) {
             model.addAttribute(nota);
             attributes.addFlashAttribute("error", "No se pudo guardar debido a un error.");
             return "nota/create";
         }
 
+        Contacto contacto = new Contacto();
+        contacto.setId(contactoId);
+
+        nota.setContacto(contacto);
         notaService.crearOEditar(nota);
         attributes.addFlashAttribute("msg", "Nota creada correctamente");
-        return "redirect:/notas"; // Redirige a la lista de contactos
+        return "redirect:/contactos"; // Redirige a la lista de contactos
     }
 
 
