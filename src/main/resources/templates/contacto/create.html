@@ -30,12 +30,6 @@
             </div>
         </div>
 
-        <!-- Nueva sección para agregar notas -->
-        <div class="mb-3">
-            <label for="nota" class="form-label">Nota</label>
-            <textarea id="nota" th:field="*{notas[0].contenido}" class="form-control" placeholder="Escribe una nota para el contacto"></textarea>
-        </div>
-
         <div class="d-flex justify-content-start">
             <button type="submit" class="btn btn-primary shadow-sm rounded-pill me-3 animate__animated animate__bounceIn">Guardar</button>
             <a th:href="@{/contactos}" class="btn btn-outline-secondary shadow-sm rounded-pill animate__animated animate__bounceIn">Regresar</a>
@@ -72,5 +66,4 @@
 </style>
 
 </html>
-
 

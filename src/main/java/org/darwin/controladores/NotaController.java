@@ -1,15 +1,16 @@
 package org.darwin.controladores;
 
 
+import org.darwin.modelos.Contacto;
 import org.darwin.modelos.Nota;
-import org.darwin.servicios.interfaces.ICategoriaService;
+import org.darwin.servicios.implementaciones.ContactoService;
+import org.darwin.servicios.interfaces.IContactoService;
 import org.darwin.servicios.interfaces.INotaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,8 @@ import java.util.stream.IntStream;
 public class NotaController {
     @Autowired
     private INotaService notaService;
+    @Autowired
+    private IContactoService contactoService;
 
     @GetMapping
     public String index(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size){
@@ -47,7 +50,9 @@ public class NotaController {
     }
 
     @GetMapping("/create")
-    public String create(Nota nota) {
+    public String create(Nota nota, @PathVariable("id") Integer id, Model model) {
+        Contacto contacto = contactoService.buscarPorId(id).get();
+        model.addAttribute("contacto", contacto);
         return "nota/create"; // Asegúrate de que la vista está en la ubicación correcta
     }
 

@@ -22,5 +22,5 @@ public class Categoria {
     private String nombre;
 
     @OneToMany(mappedBy = "categoria")
-  private List<Contacto> contactos;
+    private List<Contacto> contactos;
 }

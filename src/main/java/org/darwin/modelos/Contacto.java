@@ -52,5 +52,4 @@ public class Contacto {
         notas.remove(nota);
         nota.setContacto(null);
     }
-
 }

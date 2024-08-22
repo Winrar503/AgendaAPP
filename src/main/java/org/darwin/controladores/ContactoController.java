@@ -1,6 +1,7 @@
 package org.darwin.controladores;
 
 import org.darwin.modelos.Contacto;
+import org.darwin.modelos.Nota;
 import org.darwin.servicios.implementaciones.CategoriaService;
 import org.darwin.servicios.implementaciones.NotaService;
 import org.darwin.servicios.interfaces.IContactoService;
@@ -50,15 +51,16 @@ public class ContactoController {
         return "contacto/index";
     }
 
+
     @GetMapping("/create")
     public String create(Model model){
         model.addAttribute("contacto", new Contacto());
         model.addAttribute("categorias", categoriaService.obtenerTodos());
-        model.addAttribute("notas", notaService.obtenerTodos());
         return "contacto/create";
     }
 
-    @PostMapping("/save")
+
+        @PostMapping("/save")
     public String save(Contacto contacto, BindingResult result, Model model, RedirectAttributes attributes){
         if(result.hasErrors()){
             model.addAttribute(contacto);
@@ -70,13 +72,13 @@ public class ContactoController {
         attributes.addFlashAttribute("msg", "Contacto creado correctamente");
         return "redirect:/contactos";
     }
+
     //Controlador modificado temporalmente, si funciona lo dejo asi xd
     @GetMapping("/details/{id}")
     public String details(@PathVariable("id") Integer id, Model model){
         Contacto contacto = contactoService.buscarPorId(id).get();
         model.addAttribute("contacto", contacto);
         model.addAttribute("categorias", categoriaService.obtenerTodos());
-        model.addAttribute("notas", notaService.obtenerTodos());
         return "contacto/details";
     }
 
@@ -85,7 +87,6 @@ public class ContactoController {
         Contacto contacto = contactoService.buscarPorId(id).get();
         model.addAttribute("contacto", contacto);
         model.addAttribute("categorias", categoriaService.obtenerTodos());
-        model.addAttribute("notas", notaService.obtenerTodos());
         return "contacto/edit";
     }
 
@@ -102,40 +103,5 @@ public class ContactoController {
         attributes.addFlashAttribute("msg", "contacto eliminado correctamente");
         return "redirect:/contactos";
     }
-
-
-//    // Nuevo método para manejar las notas
-//    @GetMapping("/{contactoId}/addNote")
-//    public String addNoteForm(@PathVariable("contactoId") Integer contactoId, Model model) {
-//        Contacto contacto = contactoService.buscarPorId(contactoId).orElse(null);
-//        if (contacto == null) {
-//            return "redirect:/contactos";
-//        }
-//
-//        Nota nota = new Nota();
-//        nota.setContacto(contacto);
-//
-//        model.addAttribute("nota", nota);
-//        return "nota/addNote";  // Formulario para agregar la nota
-//    }
-//
-//    @PostMapping("/{contactoId}/addNote")
-//    public String addNote(@PathVariable("contactoId") Integer contactoId, @ModelAttribute Nota nota, BindingResult result, RedirectAttributes attributes) {
-//        Contacto contacto = contactoService.buscarPorId(contactoId).orElse(null);
-//        if (contacto == null) {
-//            return "redirect:/contactos";
-//        }
-//
-//        if (result.hasErrors()) {
-//            attributes.addFlashAttribute("error", "No se pudo agregar la nota debido a un error.");
-//            return "redirect:/contactos";
-//        }
-//
-//        contacto.addNota(nota);
-//        contactoService.crearOEditar(contacto);  // Guardar el contacto con la nueva nota
-//
-//        attributes.addFlashAttribute("msg", "Nota agregada correctamente");
-//        return "redirect:/contactos/details/" + contactoId;
-//    }
 
 }

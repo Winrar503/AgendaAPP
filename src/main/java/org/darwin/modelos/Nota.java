@@ -20,6 +20,6 @@ public class Nota {
     private String contenido;
 
     @ManyToOne
-    @JoinColumn(name = "contacto_id")
+    @JoinColumn(name = "contacto_id", nullable = false)
     private Contacto contacto;
 }
