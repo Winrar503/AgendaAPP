@@ -11,11 +11,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class NotaService implements INotaService {
     @Autowired
-        private INotaRepository notaRepository;
+    private INotaRepository notaRepository;
 
     @Override
     public Page<Nota> buscarTodosPaginados(Pageable pageable) {
@@ -25,6 +26,11 @@ public class NotaService implements INotaService {
     @Override
     public List<Nota> obtenerTodos() {
         return notaRepository.findAll();
+    }
+
+    @Override
+    public List<Nota> obtenerPorContactoId(Integer id){
+        return notaRepository.findByContactoId(id);
     }
 
     @Override

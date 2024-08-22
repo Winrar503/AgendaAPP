@@ -3,8 +3,8 @@ package org.darwin.controladores;
 import org.darwin.modelos.Contacto;
 import org.darwin.modelos.Nota;
 import org.darwin.servicios.implementaciones.CategoriaService;
-import org.darwin.servicios.implementaciones.NotaService;
 import org.darwin.servicios.interfaces.IContactoService;
+import org.darwin.servicios.interfaces.INotaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,7 +28,7 @@ public class ContactoController {
     @Autowired
     private CategoriaService categoriaService;
     @Autowired
-    private NotaService notaService;
+    private INotaService notaService;
 
 
     @GetMapping
@@ -77,8 +77,10 @@ public class ContactoController {
     @GetMapping("/details/{id}")
     public String details(@PathVariable("id") Integer id, Model model){
         Contacto contacto = contactoService.buscarPorId(id).get();
+        List<Nota> notas = notaService.obtenerPorContactoId(contacto.getId());
         model.addAttribute("contacto", contacto);
         model.addAttribute("categorias", categoriaService.obtenerTodos());
+        model.addAttribute("notas", notas);
         return "contacto/details";
     }
 

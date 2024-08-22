@@ -12,6 +12,8 @@ public interface INotaService {
 
     List<Nota> obtenerTodos();
 
+    List<Nota> obtenerPorContactoId(Integer id);
+
     Optional<Nota> buscarPorId(Integer id);
 
     Nota crearOEditar(Nota nota);

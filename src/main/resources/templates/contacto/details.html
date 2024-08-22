@@ -38,7 +38,12 @@
                     <p class="form-control bg-light" th:text="${contacto.categoria.nombre}">Categoría del contacto</p>
                 </div>
 
-
+                <div class="mb-3">
+                    <h5 class="text-muted">Notas:</h5>
+                    <ul>
+                        <li th:each="nota : ${notas}" th:text="${nota.contenido}"></li>
+                    </ul>
+                </div>
 
                 <div class="mt-4 d-flex align-items-center">
                     <a th:href="@{/contactos}" class="btn btn-outline-secondary shadow-sm rounded-pill">Regresar</a>
