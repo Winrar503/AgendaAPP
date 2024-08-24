@@ -69,17 +69,34 @@
 			<version>3.3.1</version>
 		</dependency>
 
-		<!-- Requerido para trabajar Spring Security
+		<!-- Requerido para trabajar Spring Security-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
-		 Requerido para trabajar Thymeleaf Spring Security Tags
+		<!-- Requerido para trabajar Thymeleaf Spring Security Tags-->
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
-		</dependency> -->
+		</dependency>
+<!--sssssssssssssssssssssssssssssssssss-->
+<!--para codigo qr-->
+		<!-- ZXing Core -->
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>3.5.0</version>
+		</dependency>
+
+		<!-- ZXing Java SE extensions (for MatrixToImageWriter) -->
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>3.5.0</version>
+		</dependency>
+<!--///////////////////////////////////////////////-->
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
