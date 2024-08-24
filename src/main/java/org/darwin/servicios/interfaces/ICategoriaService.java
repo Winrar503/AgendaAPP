@@ -17,4 +17,14 @@ public interface ICategoriaService {
     Categoria crearOEditar(Categoria categoria);
 
     void eliminarPorId(Integer id);
+
+//    void eliminarDefinitivamentePorId(Integer id);  // Nuevo método
+//
+//    void restaurarPorId(Integer id);  // Nuevo método
+
+    List<Categoria> findContactosEliminados();
+
+    void restaurarContacto(Integer id);
+
+    void eliminarDefinitivamenteContacto(Integer id);
 }

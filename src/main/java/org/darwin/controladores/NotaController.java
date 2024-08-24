@@ -1,6 +1,7 @@
 package org.darwin.controladores;
 
 
+import org.darwin.modelos.Categoria;
 import org.darwin.modelos.Contacto;
 import org.darwin.modelos.Nota;
 import org.darwin.servicios.interfaces.IContactoService;
@@ -100,4 +101,31 @@ public class NotaController {
         attributes.addFlashAttribute("msg", "Nota eliminada correctamente");
         return "redirect:/notas";
     }
+
+
+//    //    controlador para papelera
+//    @GetMapping("/papelera")
+//    public String papelera(Model model) {
+//        List<Nota> notasEliminados = notaService.obtenerTodos().stream()
+//                .filter(Nota::isEliminado)
+//                .collect(Collectors.toList());
+//        model.addAttribute("notasEliminados", notasEliminados);
+//        return "nota/papelera";
+//    }
+//
+//    @PostMapping("/restore/{id}")
+//    public String restaurar(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+//        Nota nota = notaService.buscarPorId(id).orElseThrow(() -> new RuntimeException("Nota no encontrado"));
+//        nota.setEliminado(false);
+//        notaService.crearOEditar(nota);
+//        attributes.addFlashAttribute("msg", "nota restaurado correctamente");
+//        return "redirect:/contactos";
+//    }
+//
+//    @PostMapping("/eliminar-definitivo/{id}")
+//    public String eliminarDefinitivo(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+//        notaService.eliminarDefinitivamentePorId(id);
+//        attributes.addFlashAttribute("msg", "nota eliminado definitivamente");
+//        return "redirect:/contactos/papelera";
+//    }
 }

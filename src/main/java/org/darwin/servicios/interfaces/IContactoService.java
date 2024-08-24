@@ -17,4 +17,14 @@ public interface IContactoService {
     Contacto crearOEditar(Contacto contacto);
 
     void eliminarPorId(Integer id);
+
+//    void eliminarDefinitivamentePorId(Integer id);  // Nuevo método
+//
+//    void restaurarPorId(Integer id);  // Nuevo método
+
+    List<Contacto> findContactosEliminados();
+
+    void restaurarContacto(Integer id);
+
+    void eliminarDefinitivamenteContacto(Integer id);
 }

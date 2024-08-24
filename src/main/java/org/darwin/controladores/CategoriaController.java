@@ -64,19 +64,19 @@ public class CategoriaController {
     }
 
 
-//    @GetMapping("/details/{id}")
-//    public String details(@PathVariable("id") Integer id, Model model){
-//        Categoria categoria = categoriaService.buscarPorId(id).get();
-//        model.addAttribute("categoria", categoria);
-//        return "categoria/details";
-//    }
+    @GetMapping("/details/{id}")
+    public String details(@PathVariable("id") Integer id, Model model){
+        Categoria categoria = categoriaService.buscarPorId(id).get();
+        model.addAttribute("categoria", categoria);
+        return "categoria/details";
+    }
 
-//    @GetMapping("/edit/{id}")
-//    public String edit(@PathVariable("id") Integer id, Model model){
-//        Categoria categoria = categoriaService.buscarPorId(id).get();
-//        model.addAttribute("categoria", categoria);
-//        return "categoria/edit";
-//    }
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Integer id, Model model){
+        Categoria categoria = categoriaService.buscarPorId(id).get();
+        model.addAttribute("categoria", categoria);
+        return "categoria/edit";
+    }
 
     @GetMapping("/remove/{id}")
     public String remove(@PathVariable("id") Integer id, Model model){
@@ -91,4 +91,50 @@ public class CategoriaController {
         attributes.addFlashAttribute("msg", "categoria eliminado correctamente");
         return "redirect:/categorias";
     }
+
+
+//    //    controlador para papelera
+//    @GetMapping("/papelera")
+//    public String papelera(Model model) {
+//        List<Categoria> categoriasEliminados = categoriaService.obtenerTodos().stream()
+//                .filter(Categoria::isEliminado)
+//                .collect(Collectors.toList());
+//        model.addAttribute("categoriasEliminados", categoriasEliminados);
+//        return "categoria/papelera";
+//    }
+
+    @GetMapping("/papelera")
+    public String verPapelera(Model model) {
+        List<Categoria> categoriasEliminados = categoriaService.findContactosEliminados();
+        model.addAttribute("categoriasEliminados", categoriasEliminados);
+        return "categoria/papelera";
+    }
+
+
+    @GetMapping("/restaurar/{id}")
+    public String restaurarContacto(@PathVariable Integer id) {
+        categoriaService.restaurarContacto(id);
+        return "redirect:/categorias/papelera";
+    }
+
+    @GetMapping("/eliminar-definitivamente/{id}")
+    public String eliminarDefinitivamenteContacto(@PathVariable Integer id) {
+        categoriaService.eliminarDefinitivamenteContacto(id);
+        return "redirect:/categorias/papelera";
+    }
+//    @PostMapping("/restore/{id}")
+//    public String restaurar(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+//        Categoria categoria = categoriaService.buscarPorId(id).orElseThrow(() -> new RuntimeException("categoria no encontrado"));
+//        categoria.setEliminado(false);
+//        categoriaService.crearOEditar(categoria);
+//        attributes.addFlashAttribute("msg", "categoria restaurado correctamente");
+//        return "redirect:/categoria";
+//    }
+//
+//    @PostMapping("/eliminar-definitivo/{id}")
+//    public String eliminarDefinitivo(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+//        categoriaService.eliminarDefinitivamentePorId(id);
+//        attributes.addFlashAttribute("msg", "categoria eliminado definitivamente");
+//        return "redirect:/categorias/papelera";
+//    }
 }

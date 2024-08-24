@@ -1,6 +1,7 @@
 package org.darwin.servicios.implementaciones;
 
 
+import org.darwin.modelos.Contacto;
 import org.darwin.modelos.Nota;
 import org.darwin.repositorios.INotaRepository;
 import org.darwin.servicios.interfaces.INotaService;
@@ -47,4 +48,22 @@ public class NotaService implements INotaService {
     public void eliminarPorId(Integer id) {
         notaRepository.deleteById(id);
     }
+
+//    @Override
+//    public void eliminarPorId(Integer id) {
+//        Nota nota = notaRepository.findById(id).orElseThrow(() -> new RuntimeException("Nota no encontrada"));
+//        nota.setEliminado(true);
+//        notaRepository.save(nota);
+//    }
+//
+//    public void eliminarDefinitivamentePorId(Integer id) {
+//        notaRepository.deleteById(id);
+//    }
+//
+//    @Override
+//    public void restaurarPorId(Integer id) {
+//        Nota nota = notaRepository.findById(id).orElseThrow(() -> new RuntimeException("nota no encontrado"));
+//        nota.setEliminado(false);
+//        notaRepository.save(nota);
+//    }
 }

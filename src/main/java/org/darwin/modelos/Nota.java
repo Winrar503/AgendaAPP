@@ -23,4 +23,6 @@ public class Nota {
     @JoinColumn(name = "contacto_id", nullable = false)
     private Contacto contacto;
 
+    private boolean eliminado = false; //mandar a papelera
+
 }

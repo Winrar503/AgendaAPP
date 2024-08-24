@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content" class="container mt-5">
+  <h1 class="display-6">Papelera de Contactos</h1>
+  <a th:href="@{/contactos}" class="btn btn-outline-secondary shadow-sm rounded-pill">Regresar</a>
+  <div class="card shadow-lg mt-4 rounded-lg">
+    <div class="card-body">
+      <ul class="list-group">
+        <li class="list-group-item" th:each="contacto : ${contactosEliminados}">
+          <div>
+            <strong th:text="${contacto.nombre}"></strong>
+            <div class="d-flex justify-content-end">
+              <a th:href="@{/contactos/restaurar/{id}(id=${contacto.id})}" class="btn btn-success btn-sm me-2">Restaurar</a>
+              <a th:href="@{/contactos/eliminar-definitivamente/{id}(id=${contacto.id})}" class="btn btn-danger btn-sm">Eliminar Definitivamente</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<style>
+  .card {
+    border-radius: 1rem;
+    background: #ffffff;
+    padding: 20px;
+  }
+  .btn {
+    border-radius: 30px;
+    padding: 10px 20px;
+  }
+  .btn-success {
+    background-color: #28a745;
+    color: white;
+  }
+  .btn-success:hover {
+    background-color: #218838;
+  }
+  .btn-danger {
+    background-color: #dc3545;
+    color: white;
+  }
+  .btn-danger:hover {
+    background-color: #c82333;
+  }
+</style>
+</html>

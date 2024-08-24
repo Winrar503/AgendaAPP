@@ -41,6 +41,8 @@ public class Contacto {
     @OneToMany(mappedBy = "contacto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Nota> notas = new ArrayList<>();
 
+    private boolean eliminado = false; //para pepelera
+
     // Método para agregar una nota
     public void addNota(Nota nota) {
         notas.add(nota);

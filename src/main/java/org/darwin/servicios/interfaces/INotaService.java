@@ -19,4 +19,8 @@ public interface INotaService {
     Nota crearOEditar(Nota nota);
 
     void eliminarPorId(Integer id);
+
+//    void eliminarDefinitivamentePorId(Integer id);  // Nuevo método
+//
+//    void restaurarPorId(Integer id);  // Nuevo método
 }

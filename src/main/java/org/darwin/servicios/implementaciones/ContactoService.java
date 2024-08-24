@@ -36,8 +36,46 @@ public class ContactoService implements IContactoService {
         return contactoRepository.save(contacto);
     }
 
+
+//    @Override
+//    public void eliminarPorId(Integer id) {
+//        contactoRepository.deleteById(id);
+//    }
+
+    public List<Contacto> findContactosEliminados() {
+        return contactoRepository.findByEliminado(true);
+    }
+
     @Override
     public void eliminarPorId(Integer id) {
+        Contacto contacto = contactoRepository.findById(id).orElseThrow(() -> new RuntimeException("Contacto no encontrado"));
+        contacto.setEliminado(true);
+        contactoRepository.save(contacto);
+    }
+    @Override
+    public void restaurarContacto(Integer id) {
+        Contacto contacto = contactoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Contacto no encontrado"));
+        contacto.setEliminado(false);
+        contactoRepository.save(contacto);
+    }
+
+
+    @Override
+    public void eliminarDefinitivamenteContacto(Integer id) {
         contactoRepository.deleteById(id);
     }
+//
+//    public void eliminarDefinitivamentePorId(Integer id) {
+//        contactoRepository.deleteById(id);
+//    }
+
+//    @Override
+//    public void restaurarPorId(Integer id) {
+//        Contacto contacto = contactoRepository.findById(id).orElseThrow(() -> new RuntimeException("Contacto no encontrado"));
+//        contacto.setEliminado(false);
+//        contactoRepository.save(contacto);
+//    }
+
+
 }

@@ -106,4 +106,51 @@ public class ContactoController {
         return "redirect:/contactos";
     }
 
+//    controlador para papelera
+//    @GetMapping("/papelera")
+//    public String papelera(Model model) {
+//        List<Contacto> contactosEliminados = contactoService.obtenerTodos().stream()
+//                .filter(Contacto::isEliminado)
+//                .collect(Collectors.toList());
+//        model.addAttribute("contactosEliminados", contactosEliminados);
+//        return "contacto/papelera";
+//    }
+
+    @GetMapping("/papelera")
+    public String verPapelera(Model model) {
+        List<Contacto> contactosEliminados = contactoService.findContactosEliminados();
+        model.addAttribute("contactosEliminados", contactosEliminados);
+        return "contacto/papelera";
+    }
+
+
+    @GetMapping("/restaurar/{id}")
+    public String restaurarContacto(@PathVariable Integer id) {
+        contactoService.restaurarContacto(id);
+        return "redirect:/contactos/papelera";
+    }
+
+    @GetMapping("/eliminar-definitivamente/{id}")
+    public String eliminarDefinitivamenteContacto(@PathVariable Integer id) {
+        contactoService.eliminarDefinitivamenteContacto(id);
+        return "redirect:/contactos/papelera";
+    }
+
+
+//    @PostMapping("/restore/{id}")
+//    public String restaurar(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+//        Contacto contacto = contactoService.buscarPorId(id).orElseThrow(() -> new RuntimeException("Contacto no encontrado"));
+//        contacto.setEliminado(false);
+//        contactoService.crearOEditar(contacto);
+//        attributes.addFlashAttribute("msg", "Contacto restaurado correctamente");
+//        return "redirect:/contactos";
+//    }
+//
+//    @PostMapping("/eliminar-definitivo/{id}")
+//    public String eliminarDefinitivo(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+//        contactoService.eliminarDefinitivamentePorId(id);
+//        attributes.addFlashAttribute("msg", "Contacto eliminado definitivamente");
+//        return "redirect:/contactos/papelera";
+//    }
+
 }

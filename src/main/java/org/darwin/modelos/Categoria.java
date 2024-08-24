@@ -23,4 +23,6 @@ public class Categoria {
 
     @OneToMany(mappedBy = "categoria")
     private List<Contacto> contactos;
+
+    private boolean eliminado = false; //papelerea
 }
