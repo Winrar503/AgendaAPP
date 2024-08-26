@@ -37,7 +37,9 @@ public class ContactoController {
         int pageSize = size.orElse(5); // tamaño de la página, se asigna 5
         Pageable pageable = PageRequest.of(currentPage, pageSize);
 
-        Page<Contacto> contactos = contactoService.buscarTodosPaginados(pageable);
+        //Filtrar todos los contactos que  ya esten elimido
+        Page<Contacto> contactos = contactoService.buscarTodosNoEliminadosPaginados(pageable);
+
         model.addAttribute("contactos", contactos);
 
         int totalPages = contactos.getTotalPages();
@@ -116,6 +118,14 @@ public class ContactoController {
 //        return "contacto/papelera";
 //    }
 
+    //para dejar de mostrar los contactos eliminado en la index
+    // @GetMapping
+    // public String listarContactos(Model model) {
+    //     List<Contacto> contactos = contactoService.findContactosActivos(); // Aquí
+    //     model.addAttribute("contactos", contactos);
+    //     return "contactos/index";
+    // }
+    //
     @GetMapping("/papelera")
     public String verPapelera(Model model) {
         List<Contacto> contactosEliminados = contactoService.findContactosEliminados();

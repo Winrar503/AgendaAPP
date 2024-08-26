@@ -65,7 +65,11 @@ public class ContactoService implements IContactoService {
     public void eliminarDefinitivamenteContacto(Integer id) {
         contactoRepository.deleteById(id);
     }
-//
+
+    @Override
+    public Page<Contacto> buscarTodosNoEliminadosPaginados(Pageable pageable){
+        return contactoRepository.findByEliminadoFalse(pageable);
+    }
 //    public void eliminarDefinitivamentePorId(Integer id) {
 //        contactoRepository.deleteById(id);
 //    }

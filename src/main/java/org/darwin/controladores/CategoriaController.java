@@ -31,7 +31,8 @@ public class CategoriaController {
         int pageSize = size.orElse(5); // tamaño de la página, se asigna 5
         Pageable pageable = PageRequest.of(currentPage, pageSize);
 
-        Page<Categoria> categorias = categoriaService.buscarTodosPaginados(pageable);
+        Page<Categoria> categorias = categoriaService.buscarTodosNoEliminadosPaginados(pageable);
+
         model.addAttribute("categorias", categorias);
 
         int totalPages = categorias.getTotalPages();
@@ -122,6 +123,8 @@ public class CategoriaController {
         categoriaService.eliminarDefinitivamenteContacto(id);
         return "redirect:/categorias/papelera";
     }
+
+    
 //    @PostMapping("/restore/{id}")
 //    public String restaurar(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 //        Categoria categoria = categoriaService.buscarPorId(id).orElseThrow(() -> new RuntimeException("categoria no encontrado"));

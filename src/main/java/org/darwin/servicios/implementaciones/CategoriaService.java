@@ -1,7 +1,6 @@
 package org.darwin.servicios.implementaciones;
 
 import org.darwin.modelos.Categoria;
-import org.darwin.modelos.Contacto;
 import org.darwin.repositorios.ICategoriaRepository;
 import org.darwin.servicios.interfaces.ICategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +61,11 @@ public class CategoriaService implements ICategoriaService {
     @Override
     public void eliminarDefinitivamenteContacto(Integer id) {
         categoriaRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<Categoria> buscarTodosNoEliminadosPaginados(Pageable pageable){
+        return categoriaRepository.findByEliminadoFalse(pageable);
     }
 //    servicio de papelra
 

@@ -27,4 +27,6 @@ public interface IContactoService {
     void restaurarContacto(Integer id);
 
     void eliminarDefinitivamenteContacto(Integer id);
+
+    Page<Contacto> buscarTodosNoEliminadosPaginados(Pageable pageable);
 }

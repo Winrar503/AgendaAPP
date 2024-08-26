@@ -1,6 +1,7 @@
 package org.darwin.servicios.interfaces;
 
 import org.darwin.modelos.Categoria;
+import org.darwin.modelos.Contacto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -27,4 +28,6 @@ public interface ICategoriaService {
     void restaurarContacto(Integer id);
 
     void eliminarDefinitivamenteContacto(Integer id);
+
+    Page<Categoria> buscarTodosNoEliminadosPaginados(Pageable pageable);
 }
