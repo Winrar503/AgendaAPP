@@ -150,5 +150,12 @@ public class ContactoController {
         return "redirect:/contactos/papelera";
     }
 
-
+    //Para mostrarlo en el jaifon
+    @GetMapping("/movil/{id}")
+    public String mostrarContactoMovil(@PathVariable("id") Integer id, Model model) {
+        Contacto contacto = contactoService.buscarPorId(id)
+                .orElseThrow(() -> new RuntimeException("Contacto no encontrado"));
+        model.addAttribute("contacto", contacto);
+        return "celular/contacto-movil";
+    }
 }
