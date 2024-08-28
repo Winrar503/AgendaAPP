@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -43,6 +44,8 @@ public class Contacto {
 
     private boolean eliminado = false; //para pepelera
 
+    private String qrCodePath;  // Campo para almacenar la ruta del QR
+
     // Método para agregar una nota
     public void addNota(Nota nota) {
         notas.add(nota);
@@ -54,4 +57,7 @@ public class Contacto {
         notas.remove(nota);
         nota.setContacto(null);
     }
+
+
+
 }

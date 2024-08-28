@@ -1,20 +1,35 @@
 package org.darwin.servicios.implementaciones;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import org.darwin.modelos.Contacto;
 import org.darwin.repositorios.IContactoRepository;
 import org.darwin.servicios.interfaces.IContactoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 @Service
 public class ContactoService implements IContactoService {
     @Autowired
     private IContactoRepository contactoRepository;
+
+    @Value("${qr.storage.path}")
+    private String qrStoragePath;
 
     @Override
     public Page<Contacto> buscarTodosPaginados(Pageable pageable) {
@@ -31,16 +46,36 @@ public class ContactoService implements IContactoService {
         return contactoRepository.findById(id);
     }
 
+
     @Override
     public Contacto crearOEditar(Contacto contacto) {
-        return contactoRepository.save(contacto);
+        Contacto savedContacto = contactoRepository.save(contacto);
+        generateQRCode(savedContacto);
+        return savedContacto;
     }
 
+    private void generateQRCode(Contacto contacto) {
+        try {
+            String qrContent = String.format("Nombre: %s\nEmail: %s\nTeléfono: %s",
+                    contacto.getNombre(), contacto.getEmail(), contacto.getNumero());
 
-//    @Override
-//    public void eliminarPorId(Integer id) {
-//        contactoRepository.deleteById(id);
-//    }
+            String qrFileName = contacto.getId() + "_qr.png";  // Nombre del archivo QR
+            Path uploadPath = Paths.get(qrStoragePath, qrFileName);
+
+            BitMatrix matrix = new MultiFormatWriter().encode(qrContent, BarcodeFormat.QR_CODE, 350, 350);
+
+            MatrixToImageWriter.writeToPath(matrix, "PNG", uploadPath);
+
+            // Usar barras normales en la ruta
+            contacto.setQrCodePath("/qr-codes/" + qrFileName);
+
+            contactoRepository.save(contacto);  // Actualizar contacto con la ruta del QR
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Manejo de excepciones apropiado
+        }
+    }
 
     public List<Contacto> findContactosEliminados() {
         return contactoRepository.findByEliminado(true);
@@ -70,16 +105,5 @@ public class ContactoService implements IContactoService {
     public Page<Contacto> buscarTodosNoEliminadosPaginados(Pageable pageable){
         return contactoRepository.findByEliminadoFalse(pageable);
     }
-//    public void eliminarDefinitivamentePorId(Integer id) {
-//        contactoRepository.deleteById(id);
-//    }
-
-//    @Override
-//    public void restaurarPorId(Integer id) {
-//        Contacto contacto = contactoRepository.findById(id).orElseThrow(() -> new RuntimeException("Contacto no encontrado"));
-//        contacto.setEliminado(false);
-//        contactoRepository.save(contacto);
-//    }
-
 
 }

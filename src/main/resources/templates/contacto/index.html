@@ -201,6 +201,8 @@
                     <a th:href="@{/contactos/remove/{id} (id = ${item.id}) }" class="btn btn-custom btn-outline-danger">Eliminar</a>
                     <a th:href="@{/notas/create/{id}(id=${item.id})}" class="btn btn-custom btn-outline-warning">Crear Nota</a>
                 </div>
+                <p th:text="${item.qrCodePath}"></p>
+                <img th:src="@{${item.qrCodePath}}" alt="QR Code" style="max-width: 100px;"/>
             </div>
         </div>
     </div>

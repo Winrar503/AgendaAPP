@@ -1,20 +1,37 @@
 package org.darwin.controladores;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletResponse;
 import org.darwin.modelos.Contacto;
 import org.darwin.modelos.Nota;
 import org.darwin.servicios.implementaciones.CategoriaService;
 import org.darwin.servicios.interfaces.IContactoService;
 import org.darwin.servicios.interfaces.INotaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -54,6 +71,10 @@ public class ContactoController {
     }
 
 
+
+
+
+
     @GetMapping("/create")
     public String create(Model model){
         model.addAttribute("contacto", new Contacto());
@@ -69,6 +90,7 @@ public class ContactoController {
             attributes.addFlashAttribute("error", "No se pudo guardar debido a un error.");
             return "contacto/create";
         }
+
 
         contactoService.crearOEditar(contacto);
         attributes.addFlashAttribute("msg", "Contacto creado correctamente");
@@ -108,24 +130,6 @@ public class ContactoController {
         return "redirect:/contactos";
     }
 
-//    controlador para papelera
-//    @GetMapping("/papelera")
-//    public String papelera(Model model) {
-//        List<Contacto> contactosEliminados = contactoService.obtenerTodos().stream()
-//                .filter(Contacto::isEliminado)
-//                .collect(Collectors.toList());
-//        model.addAttribute("contactosEliminados", contactosEliminados);
-//        return "contacto/papelera";
-//    }
-
-    //para dejar de mostrar los contactos eliminado en la index
-    // @GetMapping
-    // public String listarContactos(Model model) {
-    //     List<Contacto> contactos = contactoService.findContactosActivos(); // Aquí
-    //     model.addAttribute("contactos", contactos);
-    //     return "contactos/index";
-    // }
-    //
     @GetMapping("/papelera")
     public String verPapelera(Model model) {
         List<Contacto> contactosEliminados = contactoService.findContactosEliminados();
@@ -146,21 +150,5 @@ public class ContactoController {
         return "redirect:/contactos/papelera";
     }
 
-
-//    @PostMapping("/restore/{id}")
-//    public String restaurar(@PathVariable("id") Integer id, RedirectAttributes attributes) {
-//        Contacto contacto = contactoService.buscarPorId(id).orElseThrow(() -> new RuntimeException("Contacto no encontrado"));
-//        contacto.setEliminado(false);
-//        contactoService.crearOEditar(contacto);
-//        attributes.addFlashAttribute("msg", "Contacto restaurado correctamente");
-//        return "redirect:/contactos";
-//    }
-//
-//    @PostMapping("/eliminar-definitivo/{id}")
-//    public String eliminarDefinitivo(@PathVariable("id") Integer id, RedirectAttributes attributes) {
-//        contactoService.eliminarDefinitivamentePorId(id);
-//        attributes.addFlashAttribute("msg", "Contacto eliminado definitivamente");
-//        return "redirect:/contactos/papelera";
-//    }
 
 }

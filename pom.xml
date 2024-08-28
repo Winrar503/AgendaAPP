@@ -92,14 +92,13 @@
 		<dependency>
 			<groupId>com.google.zxing</groupId>
 			<artifactId>core</artifactId>
-			<version>3.5.0</version>
+			<version>3.4.1</version>
 		</dependency>
-
 		<!-- ZXing Java SE extensions (for MatrixToImageWriter) -->
 		<dependency>
 			<groupId>com.google.zxing</groupId>
 			<artifactId>javase</artifactId>
-			<version>3.5.0</version>
+			<version>3.4.1</version>
 		</dependency>
 <!--///////////////////////////////////////////////-->
 
