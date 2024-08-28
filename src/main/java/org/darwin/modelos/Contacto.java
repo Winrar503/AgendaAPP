@@ -46,6 +46,8 @@ public class Contacto {
 
     private String qrCodePath;  // Campo para almacenar la ruta del QR
 
+    private String fotoPath;    // Campo para almacenar la ruta de la foto
+
     // Método para agregar una nota
     public void addNota(Nota nota) {
         notas.add(nota);

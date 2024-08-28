@@ -62,76 +62,117 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 1.5rem;
             margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Estilo de la Foto del Contacto */
+        .photo-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2);
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             transition: transform 0.3s ease;
         }
 
-        .profile-card:hover {
-            transform: translateY(-8px);
+        .photo-container i {
+            font-size: 3rem;
+            color: #adb5bd;
         }
 
-        .profile-card .headings {
-            border-bottom: 1px solid #e0e0e0;
-            padding-bottom: 0.75rem;
-            margin-bottom: 1rem;
+        .photo-container:hover img,
+        .photo-container:hover i {
+            transform: scale(1.05);
         }
 
-        .profile-card .headings p {
-            margin: 0;
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #007bff;
-        }
-
-        .profile-card .contact-info ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .profile-card .contact-info ul li {
+        .photo-buttons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
             display: flex;
             align-items: center;
-            margin-bottom: 0.75rem;
-            font-size: 0.9rem;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        .profile-card .contact-info svg {
-            margin-right: 0.75rem;
-            color: #007bff;
+        .photo-container:hover .photo-buttons {
+            opacity: 1;
         }
 
-        .btn-custom {
-            border-radius: 50px;
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            margin-right: 0.5rem;
+        .photo-buttons label {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .photo-buttons label:hover {
+            transform: scale(1.2);
+        }
+
+        .photo-buttons input[type="file"] {
+            display: none;
+        }
+
+        .photo-buttons button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .photo-buttons button:hover {
+            transform: scale(1.2);
+        }
+
+        /* Estilo del QR Code */
+        .qr-code-container {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .qr-code-container img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            border: 2px solid #007bff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilo para los botones de acción con íconos */
+        .btn-custom i {
+            margin-right: 5px;
         }
 
         .btn-custom:hover {
-            background-color: #0056b3;
-            color: white;
-        }
-
-        .pagination {
-            margin-top: 2rem;
-        }
-
-        .pagination .page-item.active .page-link {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-
-        .pagination .page-link {
-            border-radius: 50px;
-            padding: 0.5rem 1rem;
-            color: #007bff;
-            transition: background-color 0.3s ease;
-        }
-
-        .pagination .page-link:hover {
-            background-color: #0056b3;
-            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 8px 10px rgba(0, 0, 0, 0.15);
         }
     </style>
 </head>
@@ -163,63 +204,71 @@
 
     <div class="header-action animate__animated animate__fadeIn">
         <h1 class="header-title">Listado de Contactos</h1>
-        <a th:href="@{/contactos/papelera}" class="btn btn-outline-danger">Ver Papelera de Contactos</a>
         <a th:href="@{/contactos/create}" class="create-btn">
             <div class="sign">+</div>
-            <div class="text">Crear</div>
+            <div class="text">Crear Contacto</div>
         </a>
     </div>
 
     <div class="row">
         <div class="col-md-4 mb-4" th:each="item : ${contactos}">
             <div class="profile-card animate__animated animate__fadeInUp">
-                <div class="headings">
-                    <p th:text="${item.nombre}"></p>
-                    <p class="text-sm font-semibold">Contacto</p>
+                <!-- Contenedor de la foto -->
+                <div class="photo-container">
+                    <img th:if="${item.fotoPath != null}" th:src="@{${item.fotoPath}}" alt="Foto del contacto" />
+                    <i th:if="${item.fotoPath == null}" class="fas fa-user"></i>
+                    <div class="photo-buttons">
+                        <form th:action="@{/contactos/subirFoto/{id}(id=${item.id})}" method="post" enctype="multipart/form-data" class="d-inline">
+                            <label for="upload-photo-${item.id}">
+                                <i class="fas fa-camera"></i>
+                            </label>
+                            <input type="file" id="upload-photo-${item.id}" name="foto" accept="image/*" onchange="this.form.submit()" />
+                        </form>
+                        <form th:action="@{/contactos/eliminarFoto/{id}(id=${item.id})}" method="post" class="d-inline" th:if="${item.fotoPath != null}">
+                            <button type="submit">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
-                <div class="contact-info">
-                    <ul>
-                        <li>
-                            <svg class="fill-stone-700" height="15" width="15" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M0 0h24v24H0V0z" fill="none"></path>
-                                <path d="M19.23 15.26l-2.54-.29c-.61-.07-1.21.14-1.64.57l-1.84 1.84c-2.83-1.44-5.15-3.75-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52c-.12-1.01-.97-1.77-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07.53 8.54 7.36 15.36 15.89 15.89 1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98z"></path>
-                            </svg>
-                            <p th:text="${item.numero}"></p>
-                        </li>
-                        <li>
-                            <svg class="fill-stone-700" height="15" width="15" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M16,14.81,28.78,6.6A3,3,0,0,0,27,6H5a3,3,0,0,0-1.78.6Z" fill="#231f20"></path>
-                                <path d="M16.54,16.84h0l-.17.08-.08,0A1,1,0,0,1,16,17h0a1,1,0,0,1-.25,0l-.08,0-.17-.08h0L2.1,8.26A3,3,0,0,0,2,9V23a3,3,0,0,0,3,3H27a3,3,0,0,0,3-3V9a3,3,0,0,0-.1-.74Z" fill="#231f20"></path>
-                            </svg>
-                            <p th:text="${item.email}"></p>
-                        </li>
-                    </ul>
+
+                <!-- Información del contacto -->
+                <div class="contact-info mt-3">
+                    <h3 th:text="${item.nombre}" style="font-weight: bold; color: #333;"></h3>
+                    <p th:text="${item.numero}" style="margin-bottom: 0;"></p>
+                    <p th:text="${item.email}"></p>
                 </div>
-                <div class="mt-3">
-                    <a th:href="@{/contactos/details/{id} (id = ${item.id}) }" class="btn btn-custom btn-outline-secondary">Detalles</a>
-                    <a th:href="@{/contactos/edit/{id} (id = ${item.id}) }" class="btn btn-custom btn-outline-info">Editar</a>
-                    <a th:href="@{/contactos/remove/{id} (id = ${item.id}) }" class="btn btn-custom btn-outline-danger">Eliminar</a>
-                    <a th:href="@{/notas/create/{id}(id=${item.id})}" class="btn btn-custom btn-outline-warning">Crear Nota</a>
+
+                <!-- QR Code -->
+                <div class="qr-code-container">
+                    <img th:src="@{${item.qrCodePath}}" alt="QR Code">
                 </div>
-                <p th:text="${item.qrCodePath}"></p>
-                <img th:src="@{${item.qrCodePath}}" alt="QR Code" style="max-width: 100px;"/>
+
+                <!-- Botones de acción con íconos -->
+                <div class="mt-4 text-center">
+                    <a th:href="@{/contactos/details/{id} (id = ${item.id}) }" class="btn btn-custom btn-outline-primary mx-1">
+                        <i class="fas fa-info-circle"></i>Detalles
+                    </a>
+                    <a th:href="@{/contactos/edit/{id} (id = ${item.id}) }" class="btn btn-custom btn-outline-success mx-1">
+                        <i class="fas fa-edit"></i>Editar
+                    </a>
+                    <a th:href="@{/contactos/remove/{id} (id = ${item.id}) }" class="btn btn-custom btn-outline-danger mx-1">
+                        <i class="fas fa-trash-alt"></i>Eliminar
+                    </a>
+                    <a th:href="@{/notas/create/{id}(id=${item.id})}" class="btn btn-custom btn-outline-warning mx-1">
+                        <i class="fas fa-sticky-note"></i>Crear Nota
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-
-    <nav aria-label="Page navigation example" class="animate__animated animate__fadeIn mt-4">
-        <ul class="pagination justify-content-center">
-            <li class="page-item" th:each="pageNumber : ${pageNumbers}">
-                <a class="page-link" th:href="@{|/contactos?page=${pageNumber}|}" th:text="${pageNumber}"></a>
-            </li>
-        </ul>
-    </nav>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.0.20/sweetalert2.all.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
 
 <!--<!DOCTYPE html>-->
 <!--<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/_mainLayout">-->

@@ -11,5 +11,9 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/qr-codes/**")
                 .addResourceLocations("file:///C:/Users/darwi/OneDrive/Escritorio/Universidad/Java/qr-codes/");
+
+        registry.addResourceHandler("/fotos/**")
+                .addResourceLocations("file:///C:/Users/darwi/OneDrive/Escritorio/Universidad/Java/AgendaApp/src/main/resources/static/fotos/");
     }
+
 }

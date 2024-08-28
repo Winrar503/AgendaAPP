@@ -1,39 +1,30 @@
 package org.darwin.controladores;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
-import jakarta.annotation.Resource;
-import jakarta.servlet.http.HttpServletResponse;
+
 import org.darwin.modelos.Contacto;
 import org.darwin.modelos.Nota;
 import org.darwin.servicios.implementaciones.CategoriaService;
 import org.darwin.servicios.interfaces.IContactoService;
 import org.darwin.servicios.interfaces.INotaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.InputStreamResource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -46,6 +37,8 @@ public class ContactoController {
     private CategoriaService categoriaService;
     @Autowired
     private INotaService notaService;
+
+
 
 
     @GetMapping
@@ -157,5 +150,57 @@ public class ContactoController {
                 .orElseThrow(() -> new RuntimeException("Contacto no encontrado"));
         model.addAttribute("contacto", contacto);
         return "celular/contacto-movil";
+    }
+
+
+    @Value("${foto.storage.path}")
+    private String fotoStoragePath;
+
+
+    @PostMapping("/subirFoto/{id}")
+    public String subirFoto(@PathVariable Integer id, @RequestParam("foto") MultipartFile foto, RedirectAttributes attributes) {
+        try {
+            if (!foto.isEmpty()) {
+                // Generar un nombre único para la foto
+                String fotoFileName = UUID.randomUUID().toString() + "_" + foto.getOriginalFilename();
+                Path uploadPath = Paths.get(fotoStoragePath, fotoFileName);
+
+                // Guardar el archivo en el sistema
+                Files.write(uploadPath, foto.getBytes());
+
+                // Actualizar la ruta de la foto en el contacto
+                Contacto contacto = contactoService.obtenerContactoPorId(id);
+                contacto.setFotoPath("/fotos/" + fotoFileName);
+                contactoService.crearOEditar(contacto);
+
+                attributes.addFlashAttribute("msg", "Foto subida correctamente");
+            }
+        } catch (Exception e) {
+            attributes.addFlashAttribute("error", "Error al subir la foto");
+            e.printStackTrace();
+        }
+        return "redirect:/contactos";
+    }
+
+    @PostMapping("/eliminarFoto/{id}")
+    public String eliminarFoto(@PathVariable Integer id, RedirectAttributes attributes) {
+        try {
+            Contacto contacto = contactoService.obtenerContactoPorId(id);
+            String fotoPath = contacto.getFotoPath();
+            if (fotoPath != null) {
+                Path fotoFilePath = Paths.get(fotoStoragePath, fotoPath.replace("/fotos/", ""));
+                Files.deleteIfExists(fotoFilePath);
+
+                // Eliminar la ruta de la foto en el contacto
+                contacto.setFotoPath(null);
+                contactoService.crearOEditar(contacto);
+
+                attributes.addFlashAttribute("msg", "Foto eliminada correctamente");
+            }
+        } catch (Exception e) {
+            attributes.addFlashAttribute("error", "Error al eliminar la foto");
+            e.printStackTrace();
+        }
+        return "redirect:/contactos";
     }
 }

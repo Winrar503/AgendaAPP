@@ -56,8 +56,8 @@ public class ContactoService implements IContactoService {
 
     private void generateQRCode(Contacto contacto) {
         try {
-            // Genera una URL que apunta a la vista móvil del contacto
-            String qrContent = String.format("http://localhost:8080/contactos/movil/%d", contacto.getId());
+            String qrContent = String.format("Nombre: %s\nEmail: %s\nTeléfono: %s",
+                    contacto.getNombre(), contacto.getEmail(), contacto.getNumero());
 
             String qrFileName = contacto.getId() + "_qr.png";  // Nombre del archivo QR
             Path uploadPath = Paths.get(qrStoragePath, qrFileName);
@@ -76,7 +76,6 @@ public class ContactoService implements IContactoService {
             // Manejo de excepciones apropiado
         }
     }
-
 
     public List<Contacto> findContactosEliminados() {
         return contactoRepository.findByEliminado(true);
@@ -105,6 +104,11 @@ public class ContactoService implements IContactoService {
     @Override
     public Page<Contacto> buscarTodosNoEliminadosPaginados(Pageable pageable){
         return contactoRepository.findByEliminadoFalse(pageable);
+    }
+    @Override
+    public Contacto obtenerContactoPorId(Integer id) {
+        return contactoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Contacto no encontrado"));
     }
 
 }

@@ -18,10 +18,6 @@ public interface IContactoService {
 
     void eliminarPorId(Integer id);
 
-//    void eliminarDefinitivamentePorId(Integer id);  // Nuevo método
-//
-//    void restaurarPorId(Integer id);  // Nuevo método
-
     List<Contacto> findContactosEliminados();
 
     void restaurarContacto(Integer id);
@@ -29,6 +25,8 @@ public interface IContactoService {
     void eliminarDefinitivamenteContacto(Integer id);
 
     Page<Contacto> buscarTodosNoEliminadosPaginados(Pageable pageable);
+
+    Contacto obtenerContactoPorId(Integer id);  // Asegúrate de que este método esté declarado
 
 
 }
