@@ -30,12 +30,11 @@
             margin-bottom: 2rem;
         }
 
-        .create-btn {
+        .create-btn, .trash-btn {
             display: flex;
             align-items: center;
             padding: 0.75rem 1.5rem;
             border-radius: 50px;
-            background-color: #007bff;
             color: white;
             font-size: 1.2rem;
             text-decoration: none;
@@ -43,16 +42,29 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
+        .create-btn {
+            background-color: #007bff;
+        }
+
         .create-btn:hover {
             background-color: #0056b3;
         }
 
-        .create-btn .sign {
+        .trash-btn {
+            background-color: #dc3545;
+            margin-right: 10px;
+        }
+
+        .trash-btn:hover {
+            background-color: #c82333;
+        }
+
+        .create-btn .sign, .trash-btn .sign {
             font-size: 1.5rem;
             margin-right: 0.75rem;
         }
 
-        .create-btn .text {
+        .create-btn .text, .trash-btn .text {
             font-weight: bold;
         }
 
@@ -174,6 +186,29 @@
             transform: scale(1.05);
             box-shadow: 0 8px 10px rgba(0, 0, 0, 0.15);
         }
+
+        /* Estilo para la paginación */
+        .pagination {
+            margin-top: 2rem;
+            justify-content: center;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .pagination .page-link {
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            color: #007bff;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination .page-link:hover {
+            background-color: #0056b3;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -204,163 +239,171 @@
 
     <div class="header-action animate__animated animate__fadeIn">
         <h1 class="header-title">Listado de Contactos</h1>
-        <a th:href="@{/contactos/create}" class="create-btn">
-            <div class="sign">+</div>
-            <div class="text">Crear Contacto</div>
-        </a>
+
+
+        <div>
+            <a th:href="@{/contactos/papelera}" class="trash-btn">
+                <div class="sign"><i class="fas fa-trash-alt"></i></div>
+                <div class="text">Papelera</div>
+            </a>
+            <a th:href="@{/contactos/create}" class="create-btn">
+                <div class="sign">+</div>
+                <div class="text">Crear Contacto</div>
+            </a>
+        </div>
     </div>
+
 
     <div class="row">
         <div class="col-md-4 mb-4" th:each="item : ${contactos}">
             <div class="profile-card animate__animated animate__fadeInUp">
-                <!-- Contenedor de la foto -->
-                <div class="photo-container">
-                    <img th:if="${item.fotoPath != null}" th:src="@{${item.fotoPath}}" alt="Foto del contacto" />
-                    <i th:if="${item.fotoPath == null}" class="fas fa-user"></i>
-                    <div class="photo-buttons">
-                        <form th:action="@{/contactos/subirFoto/{id}(id=${item.id})}" method="post" enctype="multipart/form-data" class="d-inline">
-                            <label for="upload-photo-${item.id}">
-                                <i class="fas fa-camera"></i>
-                            </label>
-                            <input type="file" id="upload-photo-${item.id}" name="foto" accept="image/*" onchange="this.form.submit()" />
-                        </form>
-                        <form th:action="@{/contactos/eliminarFoto/{id}(id=${item.id})}" method="post" class="d-inline" th:if="${item.fotoPath != null}">
-                            <button type="submit">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </form>
+
+
+<!--                &lt;!&ndash; Contenedor de la foto &ndash;&gt;-->
+<!--                <div class="photo-container">-->
+<!--                    <img th:if="${item.fotoPath != null}" th:src="@{${item.fotoPath}}" alt="Foto del contacto" />-->
+<!--                    <i th:if="${item.fotoPath == null}" class="fas fa-user"></i>-->
+<!--                    <div class="photo-buttons">-->
+<!--                        &lt;!&ndash; Formulario con ID único &ndash;&gt;-->
+<!--                        <form id="form-[[${item.id}]]" th:action="@{/contactos/subirFoto/{id}(id=${item.id})}" method="post" enctype="multipart/form-data" class="d-inline">-->
+<!--                            <input type="hidden" name="contactoId" th:value="${item.id}">-->
+<!--                            <label for="upload-photo-[[${item.id}]]">-->
+<!--                                <i class="fas fa-camera"></i>-->
+<!--                            </label>-->
+<!--                            <input type="file" id="upload-photo-[[${item.id}]]" name="foto" accept="image/*" onchange="document.getElementById('form-[[${item.id}]]').submit();" />-->
+<!--                        </form>-->
+<!--                        <form th:action="@{/contactos/eliminarFoto/{id}(id=${item.id})}" method="post" class="d-inline" th:if="${item.fotoPath != null}">-->
+<!--                            <button type="submit">-->
+<!--                                <i class="fas fa-trash-alt"></i>-->
+<!--                            </button>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Información del contacto &ndash;&gt;-->
+<!--                <div class="contact-info mt-3">-->
+<!--                    <h3 th:text="${item.nombre}" style="font-weight: bold; color: #333;"></h3>-->
+<!--                    <p th:text="${item.numero}" style="margin-bottom: 0;"></p>-->
+<!--                    <p th:text="${item.email}"></p>-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; QR Code &ndash;&gt;-->
+<!--                <div class="qr-code-container">-->
+<!--                    <img th:src="@{${item.qrCodePath}}" alt="QR Code">-->
+<!--                </div>-->
+
+
+                <div class="profile-card position-relative animate__animated animate__fadeInUp">
+                    <!-- Menú de tres puntos en la esquina superior derecha -->
+                    <div class="dropdown position-absolute top-0 end-0 mt-2 me-2">
+                        <button class="btn p-0 text-dark" type="button" id="dropdownMenuButton-[[${item.id}]]" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow animate__animated animate__fadeIn" aria-labelledby="dropdownMenuButton-[[${item.id}]]">
+                            <li>
+                                <a class="dropdown-item" th:href="@{/contactos/details/{id} (id = ${item.id}) }">
+                                    <i class="fas fa-info-circle"></i> Detalles
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/contactos/edit/{id} (id = ${item.id}) }">
+                                    <i class="fas fa-edit"></i> Editar
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/contactos/remove/{id} (id = ${item.id}) }">
+                                    <i class="fas fa-trash-alt"></i> Eliminar
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/notas/create/{id}(id=${item.id})}">
+                                    <i class="fas fa-sticky-note"></i> Crear Nota
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Contenedor de la foto -->
+                    <div class="photo-container">
+                        <img th:if="${item.fotoPath != null}" th:src="@{${item.fotoPath}}" alt="Foto del contacto" />
+                        <i th:if="${item.fotoPath == null}" class="fas fa-user"></i>
+                        <div class="photo-buttons">
+                            <!-- Formulario con ID único -->
+                            <form id="form-[[${item.id}]]" th:action="@{/contactos/subirFoto/{id}(id=${item.id})}" method="post" enctype="multipart/form-data" class="d-inline">
+                                <input type="hidden" name="contactoId" th:value="${item.id}">
+                                <label for="upload-photo-[[${item.id}]]">
+                                    <i class="fas fa-camera"></i>
+                                </label>
+                                <input type="file" id="upload-photo-[[${item.id}]]" name="foto" accept="image/*" onchange="document.getElementById('form-[[${item.id}]]').submit();" />
+                            </form>
+                            <form th:action="@{/contactos/eliminarFoto/{id}(id=${item.id})}" method="post" class="d-inline" th:if="${item.fotoPath != null}">
+                                <button type="submit">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Información del contacto -->
+                    <div class="contact-info mt-3">
+                        <h3 th:text="${item.nombre}" style="font-weight: bold; color: #333;"></h3>
+                        <p th:text="${item.numero}" style="margin-bottom: 0;"></p>
+                        <p th:text="${item.email}"></p>
+                    </div>
+
+                    <!-- QR Code -->
+                    <div class="qr-code-container">
+                        <img th:src="@{${item.qrCodePath}}" alt="QR Code">
                     </div>
                 </div>
 
-                <!-- Información del contacto -->
-                <div class="contact-info mt-3">
-                    <h3 th:text="${item.nombre}" style="font-weight: bold; color: #333;"></h3>
-                    <p th:text="${item.numero}" style="margin-bottom: 0;"></p>
-                    <p th:text="${item.email}"></p>
-                </div>
 
-                <!-- QR Code -->
-                <div class="qr-code-container">
-                    <img th:src="@{${item.qrCodePath}}" alt="QR Code">
-                </div>
 
-                <!-- Botones de acción con íconos -->
-                <div class="mt-4 text-center">
-                    <a th:href="@{/contactos/details/{id} (id = ${item.id}) }" class="btn btn-custom btn-outline-primary mx-1">
-                        <i class="fas fa-info-circle"></i>Detalles
-                    </a>
-                    <a th:href="@{/contactos/edit/{id} (id = ${item.id}) }" class="btn btn-custom btn-outline-success mx-1">
-                        <i class="fas fa-edit"></i>Editar
-                    </a>
-                    <a th:href="@{/contactos/remove/{id} (id = ${item.id}) }" class="btn btn-custom btn-outline-danger mx-1">
-                        <i class="fas fa-trash-alt"></i>Eliminar
-                    </a>
-                    <a th:href="@{/notas/create/{id}(id=${item.id})}" class="btn btn-custom btn-outline-warning mx-1">
-                        <i class="fas fa-sticky-note"></i>Crear Nota
-                    </a>
-                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!--                &lt;!&ndash; Botones de acción con íconos &ndash;&gt;-->
+<!--                <div class="mt-4 text-center">-->
+<!--                    <a th:href="@{/contactos/details/{id} (id = ${item.id}) }" class="btn btn-custom btn-outline-primary mx-1">-->
+<!--                        <i class="fas fa-info-circle"></i>Detalles-->
+<!--                    </a>-->
+<!--                    <a th:href="@{/contactos/edit/{id} (id = ${item.id}) }" class="btn btn-custom btn-outline-success mx-1">-->
+<!--                        <i class="fas fa-edit"></i>Editar-->
+<!--                    </a>-->
+<!--                    <a th:href="@{/contactos/remove/{id} (id = ${item.id}) }" class="btn btn-custom btn-outline-danger mx-1">-->
+<!--                        <i class="fas fa-trash-alt"></i>Eliminar-->
+<!--                    </a>-->
+<!--                    <a th:href="@{/notas/create/{id}(id=${item.id})}" class="btn btn-custom btn-outline-warning mx-1">-->
+<!--                        <i class="fas fa-sticky-note"></i>Crear Nota-->
+<!--                    </a>-->
+<!--                </div>-->
             </div>
         </div>
     </div>
+
+    <!-- Paginación -->
+    <nav aria-label="Page navigation example" class="animate__animated animate__fadeIn mt-4">
+        <ul class="pagination">
+            <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                <a class="page-link" th:href="@{|/contactos?page=${pageNumber}|}" th:text="${pageNumber}"></a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.0.20/sweetalert2.all.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/_mainLayout">-->
-<!--<head>-->
-<!--    <link th:href="@{/css/botones.css}" rel="stylesheet" />-->
-<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">-->
-<!--</head>-->
-<!--<body>-->
-<!--<div layout:fragment="content" class="container mt-5">-->
-<!--    &lt;!&ndash; Mostrar mensaje de confirmación en caso de éxito &ndash;&gt;-->
-<!--    <div th:if="${msg != null}">-->
-<!--        <script>-->
-<!--            Swal.fire({-->
-<!--                title: "Confirmación",-->
-<!--                text: '[[${msg}]]',-->
-<!--                icon: "success"-->
-<!--            });-->
-<!--        </script>-->
-<!--    </div>-->
-
-<!--    &lt;!&ndash; Mostrar mensaje de error en caso de error &ndash;&gt;-->
-<!--    <div th:if="${error != null}">-->
-<!--        <script>-->
-<!--            Swal.fire({-->
-<!--                title: "Error",-->
-<!--                text: '[[${error}]]',-->
-<!--                icon: "error"-->
-<!--            });-->
-<!--        </script>-->
-<!--    </div>-->
-
-<!--    <div class="d-flex justify-content-between align-items-center mb-4 animate__animated animate__fadeIn">-->
-<!--        <h1 class="display-6 text-dark">Listado de Contactos</h1>-->
-<!--        <a th:href="@{/contactos/create}" class="Btn">-->
-<!--            <div class="sign">+</div>-->
-<!--            <div class="text">Crear </div>-->
-<!--        </a>-->
-<!--    </div>-->
-
-<!--    <div class="row">-->
-<!--        <div class="col-md-4" th:each="item : ${contactos}">-->
-<!--            <div class="profile-card">-->
-<!--                <div class="headings">-->
-<!--                    <p th:text="${item.nombre}"></p>-->
-<!--                    <p class="text-sm font-semibold">Contacto</p>-->
-<!--                </div>-->
-<!--                <div class="contact-info">-->
-<!--                    <ul>-->
-<!--                        <li>-->
-<!--                            <svg class="fill-stone-700" height="15" width="15" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">-->
-<!--                                <path d="M0 0h24v24H0V0z" fill="none"></path>-->
-<!--                                <path d="M19.23 15.26l-2.54-.29c-.61-.07-1.21.14-1.64.57l-1.84 1.84c-2.83-1.44-5.15-3.75-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52c-.12-1.01-.97-1.77-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07.53 8.54 7.36 15.36 15.89 15.89 1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98z"></path>-->
-<!--                            </svg>-->
-<!--                            <p th:text="${item.numero}"></p>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <svg class="fill-stone-700" height="15" width="15" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">-->
-<!--                                <path d="M16,14.81,28.78,6.6A3,3,0,0,0,27,6H5a3,3,0,0,0-1.78.6Z" fill="#231f20"></path>-->
-<!--                                <path d="M16.54,16.84h0l-.17.08-.08,0A1,1,0,0,1,16,17h0a1,1,0,0,1-.25,0l-.08,0-.17-.08h0L2.1,8.26A3,3,0,0,0,2,9V23a3,3,0,0,0,3,3H27a3,3,0,0,0,3-3V9a3,3,0,0,0-.1-.74Z" fill="#231f20"></path>-->
-<!--                            </svg>-->
-<!--                            <p th:text="${item.email}"></p>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-<!--                <div class="mt-3">-->
-<!--                    <a th:href="@{/contactos/details/{id} (id = ${item.id}) }" class="btn btn-outline-secondary btn-custom">Detalles</a>-->
-<!--                    <a th:href="@{/contactos/edit/{id} (id = ${item.id}) }" class="btn btn-outline-info btn-custom">Editar</a>-->
-<!--                    <a th:href="@{/contactos/remove/{id} (id = ${item.id}) }" class="btn btn-outline-danger btn-custom">Eliminar</a>-->
-<!--                    <a th:href="@{/notas/create/{id}(id=${item.id})}" class="btn btn-outline-danger btn-custom">Crear nota</a>-->
-
-
-<!--                    &lt;!&ndash;                    <button th:onclick="|location.href='@{/contactos/remove/{id}(id=${item.id})}'|" class="delete-button">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <svg class="delete-svgIcon" viewBox="0 0 448 512">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </svg>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </button>&ndash;&gt;-->
-
-<!--                </div>-->
-<!--            </div>-->
-
-
-
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <nav aria-label="Page navigation example" class="animate__animated animate__fadeIn mt-4">-->
-<!--        <ul class="pagination justify-content-center">-->
-<!--            <li class="page-item" th:each="pageNumber : ${pageNumbers}">-->
-<!--                <a class="page-link" th:href="@{|/contactos?page=${pageNumber}|}" th:text="${pageNumber}"></a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </nav>-->
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->

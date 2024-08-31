@@ -5,24 +5,28 @@
       layout:decorate="/layouts/_mainLayout">
 
 <div layout:fragment="content" class="container mt-5 animate__animated animate__fadeIn">
-    <h1 class="display-6 text-primary animate__animated animate__fadeInDown">Crear nota</h1>
+    <h1 class="display-6 text-primary animate__animated animate__fadeInDown"><i class="fas fa-sticky-note me-2"></i>Crear Nota</h1>
 
-    <div class="card shadow-lg p-4 mt-4 rounded-lg animate__animated animate__fadeInUp">
+    <div class="card shadow-lg p-4 mt-4 rounded-4 animate__animated animate__fadeInUp">
         <div class="card-body">
             <form th:action="@{/notas/save}" th:object="${nota}" method="post">
-                <input type="hidden" name="contactoId" th:value="${contacto.id}"> <!--enlasar el id del contacto-->
+                <input type="hidden" name="contactoId" th:value="${contacto.id}"> <!-- Enlazar el id del contacto -->
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="contenido" class="form-label">Nombre del Docente</label>
+                            <label for="contenido" class="form-label"><i class="fas fa-pencil-alt me-2"></i>Contenido de la Nota</label>
                             <input type="text" id="contenido" th:field="*{contenido}" class="form-control shadow-sm rounded-pill" placeholder="Escriba nota" required>
                         </div>
                     </div>
                 </div>
                 <hr>
                 <div class="d-flex justify-content-start align-items-center">
-                    <button type="submit" class="btn btn-primary shadow-sm rounded-pill me-3">Guardar</button>
-                    <a th:href="@{/contactos}" class="btn btn-outline-secondary shadow-sm rounded-pill">Regresar</a>
+                    <button type="submit" class="btn btn-primary shadow-sm rounded-pill me-3">
+                        <i class="fas fa-save me-2"></i>Guardar
+                    </button>
+                    <a th:href="@{/contactos}" class="btn btn-outline-secondary shadow-sm rounded-pill">
+                        <i class="fas fa-arrow-left me-2"></i>Regresar
+                    </a>
                 </div>
             </form>
         </div>
@@ -31,14 +35,18 @@
 
 <!-- Estilos CSS y animaciones de Animate.css -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
     .card {
         border-radius: 1rem;
-        transition: transform 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     .card:hover {
         transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
 
     .form-control {
@@ -47,14 +55,23 @@
 
     .form-control:focus {
         box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        border-color: #007bff;
     }
 
     .btn {
-        transition: transform 0.3s ease;
+        transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .btn i {
+        font-size: 1.2rem;
     }
 
     .btn:hover {
         transform: translateY(-3px);
+        background-color: #007bff;
+        color: #ffffff;
     }
 
     .animate__animated {

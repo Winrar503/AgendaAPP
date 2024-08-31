@@ -6,27 +6,29 @@
     <title>Eliminar Contacto</title>
     <!-- Enlaza a Animate.css para animaciones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <!-- Enlaza al CSS personalizado -->
-    <link rel="stylesheet" href="styles.css" />
+    <!-- Enlaza a Bootstrap para estilos básicos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <!-- Enlaza a FontAwesome para los íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 <div class="container mt-5 animate__animated animate__fadeIn">
-    <h1 class="display-6 text-danger animate__animated animate__fadeInDown">Eliminar Contacto</h1>
-    <h3 class="text-muted animate__animated animate__fadeInUp">¿Está seguro que desea eliminar este registro?</h3>
+    <h1 class="display-6 text-danger animate__animated animate__fadeInDown"><i class="fas fa-exclamation-triangle me-2"></i>Eliminar Contacto</h1>
+    <h3 class="text-muted animate__animated animate__fadeInUp"><i class="fas fa-question-circle me-2"></i>¿Está seguro que desea eliminar este registro?</h3>
 
-    <div class="card shadow-lg p-4 mt-4 rounded-lg animate__animated animate__zoomIn">
+    <div class="card shadow-lg p-4 mt-4 rounded-4 animate__animated animate__zoomIn">
         <div class="card-body">
             <dl class="row">
-                <dt class="col-sm-3 text-primary">ID</dt>
+                <dt class="col-sm-3 text-primary"><i class="fas fa-id-badge me-2"></i>ID</dt>
                 <dd class="col-sm-9" th:text="${contacto.id}"></dd>
 
-                <dt class="col-sm-3 text-primary">Nombre</dt>
+                <dt class="col-sm-3 text-primary"><i class="fas fa-user me-2"></i>Nombre</dt>
                 <dd class="col-sm-9" th:text="${contacto.nombre}"></dd>
 
-                <dt class="col-sm-3 text-primary">Número</dt>
+                <dt class="col-sm-3 text-primary"><i class="fas fa-phone-alt me-2"></i>Número</dt>
                 <dd class="col-sm-9" th:text="${contacto.numero}"></dd>
 
-                <dt class="col-sm-3 text-primary">Email</dt>
+                <dt class="col-sm-3 text-primary"><i class="fas fa-envelope me-2"></i>Email</dt>
                 <dd class="col-sm-9" th:text="${contacto.email}"></dd>
             </dl>
         </div>
@@ -34,8 +36,12 @@
 
     <form th:action="@{/contactos/delete}" method="post" class="mt-4 d-flex align-items-center animate__animated animate__fadeInUp">
         <input type="hidden" name="Id" th:value="${contacto.id}">
-        <button type="submit" class="btn btn-danger shadow-sm rounded-pill me-3 animate__animated animate__shakeX">Eliminar</button>
-        <a th:href="@{/contactos}" class="btn btn-outline-secondary shadow-sm rounded-pill">Regresar</a>
+        <button type="submit" class="btn btn-danger shadow-sm rounded-pill me-3">
+            <i class="fas fa-trash-alt me-2"></i>Eliminar
+        </button>
+        <a th:href="@{/contactos}" class="btn btn-outline-secondary shadow-sm rounded-pill">
+            <i class="fas fa-arrow-left me-2"></i>Regresar
+        </a>
     </form>
 </div>
 </body>
@@ -56,11 +62,15 @@
     h1 {
         font-size: 2.5rem;
         color: #dc3545;
+        display: flex;
+        align-items: center;
     }
 
     h3 {
         font-size: 1.5rem;
         color: #6c757d;
+        display: flex;
+        align-items: center;
     }
 
     .card {
@@ -87,6 +97,8 @@
     dt {
         font-weight: bold;
         color: #007bff;
+        display: flex;
+        align-items: center;
     }
 
     dd {
@@ -101,12 +113,41 @@
         color: #007bff;
         font-weight: bold;
         transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .btn i {
+        font-size: 1.2rem;
     }
 
     .btn:hover {
         background-color: #007bff;
         color: #ffffff;
         transform: translateY(-3px);
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: #ffffff;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+
+    .btn-outline-secondary {
+        border: 2px solid #6c757d;
+        color: #6c757d;
+        background-color: transparent;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .btn-outline-secondary:hover {
+        background-color: #6c757d;
+        color: #ffffff;
     }
 
     .mt-5 {
@@ -147,59 +188,3 @@
     }
 
 </style>
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/_mainLayout">-->
-
-<!--<div layout:fragment="content" class="container mt-5 animate__animated animate__fadeIn">-->
-<!--    <h1 class="mb-4 display-6 text-danger animate__animated animate__fadeInDown">Eliminar Contacto</h1>-->
-<!--    <h3 class="text-muted animate__animated animate__fadeInUp">¿Está seguro que desea eliminar este registro?</h3>-->
-<!--    <div class="card shadow-sm mt-4 animate__animated animate__zoomIn">-->
-<!--        <div class="card-body">-->
-<!--            <dl class="row">-->
-<!--                <dt class="col-sm-3 text-primary">ID</dt>-->
-<!--                <dd class="col-sm-9" th:text="${contacto.id}"></dd>-->
-
-<!--                <dt class="col-sm-3 text-primary">Nombre</dt>-->
-<!--                <dd class="col-sm-9" th:text="${contacto.nombre}"></dd>-->
-
-<!--                <dt class="col-sm-3 text-primary">Número</dt>-->
-<!--                <dd class="col-sm-9" th:text="${contacto.numero}"></dd>-->
-
-<!--                <dt class="col-sm-3 text-primary">Email</dt>-->
-<!--                <dd class="col-sm-9" th:text="${contacto.email}"></dd>-->
-<!--            </dl>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <form th:action="@{/contactos/delete}" method="post" class="mt-4 d-flex align-items-center animate__animated animate__fadeInUp">-->
-<!--        <input type="hidden" name="Id" th:value="${contacto.id}">-->
-<!--        <button type="submit" class="btn btn-danger shadow-sm rounded-pill me-3 animate__animated animate__shakeX">Eliminar</button>-->
-<!--        <a th:href="@{/contactos}" class="btn btn-outline-secondary shadow-sm rounded-pill">Regresar</a>-->
-<!--    </form>-->
-<!--</div>-->
-
-<!--&lt;!&ndash; Agrega los estilos CSS y las animaciones de Animate.css &ndash;&gt;-->
-<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />-->
-<!--<style>-->
-<!--    .card {-->
-<!--        border-radius: 1rem;-->
-<!--        transition: transform 0.3s ease;-->
-<!--    }-->
-
-<!--    .card:hover {-->
-<!--        transform: translateY(-5px);-->
-<!--    }-->
-
-<!--    .btn {-->
-<!--        transition: transform 0.3s ease;-->
-<!--    }-->
-
-<!--    .btn:hover {-->
-<!--        transform: translateY(-3px);-->
-<!--    }-->
-
-<!--    .animate__animated {-->
-<!--        animation-duration: 0.5s;-->
-<!--        animation-delay: 0.2s;-->
-<!--    }-->
-<!--</style>-->

@@ -158,7 +158,7 @@ public class ContactoController {
 
 
     @PostMapping("/subirFoto/{id}")
-    public String subirFoto(@PathVariable Integer id, @RequestParam("foto") MultipartFile foto, RedirectAttributes attributes) {
+    public String subirFoto(@PathVariable Integer id, @RequestParam("contactoId") Integer contactoId, @RequestParam("foto") MultipartFile foto, RedirectAttributes attributes) {
         try {
             if (!foto.isEmpty()) {
                 // Generar un nombre único para la foto
@@ -169,7 +169,7 @@ public class ContactoController {
                 Files.write(uploadPath, foto.getBytes());
 
                 // Actualizar la ruta de la foto en el contacto
-                Contacto contacto = contactoService.obtenerContactoPorId(id);
+                Contacto contacto = contactoService.obtenerContactoPorId(contactoId);
                 contacto.setFotoPath("/fotos/" + fotoFileName);
                 contactoService.crearOEditar(contacto);
 

@@ -6,38 +6,40 @@
   <title>Editar Contacto</title>
   <!-- Enlaza a Animate.css para animaciones -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-  <!-- Enlaza al CSS personalizado -->
-  <link rel="stylesheet" href="styles.css" />
+  <!-- Enlaza a Bootstrap para estilos básicos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <!-- Enlaza a FontAwesome para los íconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 <div class="container mt-5 animate__animated animate__fadeIn">
-  <h1 class="mb-4 display-6 text-primary animate__animated animate__fadeInDown">Editar Contacto</h1>
+  <h1 class="mb-4 display-6 text-primary animate__animated animate__fadeInDown"><i class="fas fa-user-edit me-2"></i>Editar Contacto</h1>
 
-  <div class="card shadow-lg p-4 rounded-lg animate__animated animate__fadeInUp">
+  <div class="card shadow-lg p-4 rounded-4 animate__animated animate__fadeInUp">
     <div class="card-body">
       <form th:action="@{/contactos/save}" th:object="${contacto}" method="post">
         <input type="hidden" th:field="*{id}">
 
         <div class="form-group mb-3">
-          <label for="nombre" class="form-label">Nombre</label>
-          <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del contacto" required>
+          <label for="nombre" class="form-label"><i class="fas fa-user me-2"></i>Nombre</label>
+          <input type="text" class="form-control shadow-sm" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del contacto" required>
         </div>
 
         <div class="form-group mb-3">
-          <label for="numero" class="form-label">Número Telefónico</label>
-          <input type="tel" class="form-control" th:field="*{numero}" id="numero" placeholder="Escriba el número telefónico" required>
+          <label for="numero" class="form-label"><i class="fas fa-phone-alt me-2"></i>Número Telefónico</label>
+          <input type="tel" class="form-control shadow-sm" th:field="*{numero}" id="numero" placeholder="Escriba el número telefónico" required>
         </div>
 
         <div class="form-group mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" th:field="*{email}" id="email" placeholder="Escriba el correo electrónico" required>
+          <label for="email" class="form-label"><i class="fas fa-envelope me-2"></i>Email</label>
+          <input type="email" class="form-control shadow-sm" th:field="*{email}" id="email" placeholder="Escriba el correo electrónico" required>
         </div>
 
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <label for="categoria">Categoría</label>
-              <select class="form-control" th:field="*{categoria.id}" id="categoria" required>
+              <label for="categoria"><i class="fas fa-list-alt me-2"></i>Categoría</label>
+              <select class="form-control shadow-sm" th:field="*{categoria.id}" id="categoria" required>
                 <option value="" disabled>Selecciona una categoría</option>
                 <option th:each="c : ${categorias}"
                         th:value="${c.id}"
@@ -50,8 +52,12 @@
         </div>
 
         <div class="mt-4 d-flex align-items-center">
-          <button type="submit" class="btn btn-primary shadow-sm rounded-pill me-3">Guardar Cambios</button>
-          <a th:href="@{/contactos}" class="btn btn-outline-secondary shadow-sm rounded-pill">Regresar</a>
+          <button type="submit" class="btn btn-primary shadow-sm rounded-pill me-3">
+            <i class="fas fa-save me-2"></i>Guardar Cambios
+          </button>
+          <a th:href="@{/contactos}" class="btn btn-outline-secondary shadow-sm rounded-pill">
+            <i class="fas fa-arrow-left me-2"></i>Regresar
+          </a>
         </div>
       </form>
     </div>
@@ -75,6 +81,8 @@
   h1 {
     font-size: 2.5rem;
     color: #007bff;
+    display: flex;
+    align-items: center;
   }
 
   .card {
@@ -101,6 +109,8 @@
   .form-label {
     font-weight: bold;
     color: #333;
+    display: flex;
+    align-items: center;
   }
 
   .form-control {
@@ -121,6 +131,12 @@
     color: #007bff;
     font-weight: bold;
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .btn i {
+    font-size: 1.2rem;
   }
 
   .btn:hover {
@@ -167,82 +183,3 @@
   }
 
 </style>
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/_mainLayout">-->
-
-<!--<div layout:fragment="content" class="container mt-5 animate__animated animate__fadeIn">-->
-<!--  <h1 class="mb-4 display-6 text-primary animate__animated animate__fadeInDown">Editar contactos</h1>-->
-
-<!--  <div class="card shadow-lg p-4 rounded-lg animate__animated animate__fadeInUp">-->
-<!--    <div class="card-body">-->
-<!--      <form th:action="@{/contactos/save}" th:object="${contacto}" method="post">-->
-<!--        <input type="hidden" th:field="*{id}">-->
-
-<!--        <div class="form-group mb-3">-->
-<!--          <label for="nombre" class="form-label">Nombre</label>-->
-<!--          <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del contacto" required>-->
-<!--        </div>-->
-
-<!--        <div class="form-group mb-3">-->
-<!--          <label for="numero" class="form-label">Número Telefónico</label>-->
-<!--          <input type="tel" class="form-control" th:field="*{numero}" id="numero" placeholder="Escriba el número telefónico" required>-->
-<!--        </div>-->
-
-<!--        <div class="form-group mb-3">-->
-<!--          <label for="email" class="form-label">Email</label>-->
-<!--          <input type="email" class="form-control" th:field="*{email}" id="email" placeholder="Escriba el correo electrónico" required>-->
-<!--        </div>-->
-
-<!--        <div class="row">-->
-<!--          <div class="col-md-6">-->
-<!--            <div class="form-group">-->
-<!--              <label for="categoria">Categoria</label>-->
-<!--              <select class="form-control" th:field="*{categoria.id}" id="categoria" required>-->
-<!--                <option value="" disabled>Selecciona una categoria</option>-->
-<!--                <option th:each="c : ${categorias}"-->
-<!--                        th:value="${c.id}"-->
-<!--                        th:selected="${c.id} == *{categoria.id}"-->
-<!--                        th:text="${c.nombre}">-->
-<!--                </option>-->
-<!--              </select>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-
-
-<!--        <div class="mt-4 d-flex align-items-center">-->
-<!--          <button type="submit" class="btn btn-primary shadow-sm rounded-pill me-3">Guardar Cambios</button>-->
-<!--          <a th:href="@{/contactos}" class="btn btn-outline-secondary shadow-sm rounded-pill">Regresar</a>-->
-<!--        </div>-->
-<!--      </form>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-<!--&lt;!&ndash; Estilos CSS y animaciones de Animate.css &ndash;&gt;-->
-<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />-->
-<!--<style>-->
-<!--  .card {-->
-<!--    border-radius: 1rem;-->
-<!--    transition: transform 0.3s ease;-->
-<!--  }-->
-
-<!--  .card:hover {-->
-<!--    transform: translateY(-5px);-->
-<!--  }-->
-
-<!--  .btn {-->
-<!--    transition: transform 0.3s ease;-->
-<!--  }-->
-
-<!--  .btn:hover {-->
-<!--    transform: translateY(-3px);-->
-<!--  }-->
-
-<!--  .animate__animated {-->
-<!--    animation-duration: 0.5s;-->
-<!--    animation-delay: 0.2s;-->
-<!--  }-->
-<!--</style>-->
-
-

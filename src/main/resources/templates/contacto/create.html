@@ -6,40 +6,46 @@
     <title>Agregar Nuevo Contacto</title>
     <!-- Enlaza a Animate.css para animaciones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <!-- Enlaza al CSS personalizado -->
-    <link rel="stylesheet" href="styles.css" />
+    <!-- Enlaza a Bootstrap para estilos básicos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <!-- Enlaza a FontAwesome para los íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 <div class="container mt-5 animate__animated animate__fadeIn">
-    <h1 class="display-6 text-dark animate__animated animate__fadeInDown">Agregar Nuevo Contacto</h1>
+    <h1 class="display-6 text-primary animate__animated animate__fadeInDown"><i class="fas fa-user-plus me-2"></i> Agregar Nuevo Contacto</h1>
 
-    <div class="card shadow-lg p-4 rounded-lg animate__animated animate__fadeInUp">
+    <div class="card shadow-lg p-4 rounded-4 animate__animated animate__fadeInUp">
         <div class="card-body">
             <form th:action="@{/contactos/save}" th:object="${contacto}" method="post">
-                <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" id="nombre" th:field="*{nombre}" class="form-control" placeholder="Escriba el nombre" required />
+                <div class="mb-4">
+                    <label for="nombre" class="form-label"><i class="fas fa-user me-2"></i>Nombre</label>
+                    <input type="text" id="nombre" th:field="*{nombre}" class="form-control shadow-sm" placeholder="Escriba el nombre" required />
                 </div>
-                <div class="mb-3">
-                    <label for="numero" class="form-label">Número</label>
-                    <input type="text" id="numero" th:field="*{numero}" class="form-control" placeholder="Escriba el número" required />
+                <div class="mb-4">
+                    <label for="numero" class="form-label"><i class="fas fa-phone-alt me-2"></i>Número</label>
+                    <input type="text" id="numero" th:field="*{numero}" class="form-control shadow-sm" placeholder="Escriba el número" required />
                 </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" id="email" th:field="*{email}" class="form-control" placeholder="Escriba el correo electrónico" />
+                <div class="mb-4">
+                    <label for="email" class="form-label"><i class="fas fa-envelope me-2"></i>Email</label>
+                    <input type="email" id="email" th:field="*{email}" class="form-control shadow-sm" placeholder="Escriba el correo electrónico" />
                 </div>
 
-                <div class="mb-3">
-                    <label for="categoria" class="form-label">Categoría</label>
-                    <select class="form-control" th:field="*{categoria.id}" id="categoria" required>
+                <div class="mb-4">
+                    <label for="categoria" class="form-label"><i class="fas fa-list-alt me-2"></i>Categoría</label>
+                    <select class="form-control shadow-sm" th:field="*{categoria.id}" id="categoria" required>
                         <option value="" disabled selected>Selecciona una categoría</option>
                         <option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nombre}"></option>
                     </select>
                 </div>
 
                 <div class="d-flex justify-content-start">
-                    <button type="submit" class="btn btn-primary shadow-sm rounded-pill me-3 animate__animated animate__bounceIn">Guardar</button>
-                    <a th:href="@{/contactos}" class="btn btn-outline-secondary shadow-sm rounded-pill animate__animated animate__bounceIn">Regresar</a>
+                    <button type="submit" class="btn btn-primary shadow-sm rounded-pill me-3 animate__animated animate__bounceIn">
+                        <i class="fas fa-save me-2"></i> Guardar
+                    </button>
+                    <a th:href="@{/contactos}" class="btn btn-outline-secondary shadow-sm rounded-pill animate__animated animate__bounceIn">
+                        <i class="fas fa-arrow-left me-2"></i> Regresar
+                    </a>
                 </div>
             </form>
         </div>
@@ -47,9 +53,10 @@
 </div>
 </body>
 </html>
+
 <style>
     body {
-        font-family: Arial, sans-serif;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background-color: #f4f7f9;
         color: #333;
     }
@@ -60,64 +67,79 @@
     }
 
     h1 {
-        font-size: 2.5rem;
-        color: #333;
+        font-size: 2rem;
+        color: #007bff;
+        margin-bottom: 2rem;
+        font-weight: bold;
     }
 
     .card {
-        border-radius: 15px;
+        border-radius: 1rem;
         background: #ffffff;
-        padding: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
     }
 
     .card-body {
-        padding: 20px;
+        padding: 0;
     }
 
     .form-label {
-        font-weight: bold;
+        font-weight: 600;
+        color: #555;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
     }
 
     .form-control {
         border-radius: 0.5rem;
         border: 1px solid #ced4da;
-        padding: 10px;
-        transition: box-shadow 0.3s ease;
+        padding: 12px;
+        font-size: 1rem;
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
     }
 
     .form-control:focus {
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
         border-color: #007bff;
     }
 
     .btn {
         padding: 10px 20px;
         border-radius: 30px;
-        border: 2px solid #007bff;
-        background-color: #ffffff;
-        color: #007bff;
-        font-weight: bold;
-        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-    }
-
-    .btn:hover {
         background-color: #007bff;
         color: #ffffff;
-        transform: translateY(-3px);
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        display: inline-block;
+        display: flex;
+        align-items: center;
     }
 
-    .mt-5 {
-        margin-top: 3rem;
+    .btn i {
+        font-size: 1.2rem;
     }
 
-    .mb-3 {
+    .btn-outline-secondary {
+        border: 2px solid #6c757d;
+        color: #6c757d;
+        background-color: transparent;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .btn-outline-secondary:hover {
+        background-color: #6c757d;
+        color: #ffffff;
+    }
+
+    .mb-4 {
         margin-bottom: 1.5rem;
     }
 
@@ -125,73 +147,8 @@
         margin-right: 1rem;
     }
 
+    .mt-5 {
+        margin-top: 3rem;
+    }
+
 </style>
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/_mainLayout">-->
-
-<!--<div layout:fragment="content" class="container mt-5">-->
-<!--    <h1 class="display-6 text-dark">Agregar Nuevo Contacto</h1>-->
-
-<!--    <form th:action="@{/contactos/save}" th:object="${contacto}" method="post">-->
-<!--        <div class="mb-3">-->
-<!--            <label for="nombre" class="form-label">Nombre</label>-->
-<!--            <input type="text" id="nombre" th:field="*{nombre}" class="form-control" required />-->
-<!--        </div>-->
-<!--        <div class="mb-3">-->
-<!--            <label for="numero" class="form-label">Número</label>-->
-<!--            <input type="text" id="numero" th:field="*{numero}" class="form-control" required />-->
-<!--        </div>-->
-<!--        <div class="mb-3">-->
-<!--            <label for="email" class="form-label">Email</label>-->
-<!--            <input type="email" id="email" th:field="*{email}" class="form-control" />-->
-<!--        </div>-->
-
-<!--        <div class="row">-->
-<!--            <div class="col-md-6">-->
-<!--                <div class="form-group">-->
-<!--                    <label for="categoria">Categoría</label>-->
-<!--                    <select class="form-control" th:field="*{categoria.id}" id="categoria" required>-->
-<!--                        <option value="" disabled selected>Selecciona una categoría</option>-->
-<!--                        <option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nombre}"></option>-->
-<!--                    </select>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="d-flex justify-content-start">-->
-<!--            <button type="submit" class="btn btn-primary shadow-sm rounded-pill me-3 animate__animated animate__bounceIn">Guardar</button>-->
-<!--            <a th:href="@{/contactos}" class="btn btn-outline-secondary shadow-sm rounded-pill animate__animated animate__bounceIn">Regresar</a>-->
-<!--        </div>-->
-<!--    </form>-->
-
-<!--</div>-->
-
-<!--&lt;!&ndash; Agrega los estilos CSS y las animaciones de Animate.css &ndash;&gt;-->
-<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />-->
-<!--<style>-->
-<!--    .form-control {-->
-<!--        border-radius: 0.5rem;-->
-<!--        transition: box-shadow 0.3s ease;-->
-<!--    }-->
-
-<!--    .form-control:focus {-->
-<!--        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);-->
-<!--        border-color: #007bff;-->
-<!--    }-->
-
-<!--    .btn {-->
-<!--        transition: transform 0.3s ease;-->
-<!--    }-->
-
-<!--    .btn:hover {-->
-<!--        transform: translateY(-3px);-->
-<!--    }-->
-
-<!--    .animate__animated {-->
-<!--        animation-duration: 0.5s;-->
-<!--        animation-delay: 0.2s;-->
-<!--    }-->
-<!--</style>-->
-
-<!--</html>-->
-
