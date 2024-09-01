@@ -209,6 +209,32 @@
             background-color: #0056b3;
             color: white;
         }
+
+
+
+
+
+
+        .profile-card {
+            position: relative;
+        }
+
+        .event-notification {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 50%;
+            font-size: 12px;
+            display: none; /* Por defecto, oculto */
+        }
+
+        /* Mostrar la notificación al hacer hover sobre el contacto */
+        .profile-card:hover .event-notification {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -259,41 +285,15 @@
             <div class="profile-card animate__animated animate__fadeInUp">
 
 
-<!--                &lt;!&ndash; Contenedor de la foto &ndash;&gt;-->
-<!--                <div class="photo-container">-->
-<!--                    <img th:if="${item.fotoPath != null}" th:src="@{${item.fotoPath}}" alt="Foto del contacto" />-->
-<!--                    <i th:if="${item.fotoPath == null}" class="fas fa-user"></i>-->
-<!--                    <div class="photo-buttons">-->
-<!--                        &lt;!&ndash; Formulario con ID único &ndash;&gt;-->
-<!--                        <form id="form-[[${item.id}]]" th:action="@{/contactos/subirFoto/{id}(id=${item.id})}" method="post" enctype="multipart/form-data" class="d-inline">-->
-<!--                            <input type="hidden" name="contactoId" th:value="${item.id}">-->
-<!--                            <label for="upload-photo-[[${item.id}]]">-->
-<!--                                <i class="fas fa-camera"></i>-->
-<!--                            </label>-->
-<!--                            <input type="file" id="upload-photo-[[${item.id}]]" name="foto" accept="image/*" onchange="document.getElementById('form-[[${item.id}]]').submit();" />-->
-<!--                        </form>-->
-<!--                        <form th:action="@{/contactos/eliminarFoto/{id}(id=${item.id})}" method="post" class="d-inline" th:if="${item.fotoPath != null}">-->
-<!--                            <button type="submit">-->
-<!--                                <i class="fas fa-trash-alt"></i>-->
-<!--                            </button>-->
-<!--                        </form>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                &lt;!&ndash; Información del contacto &ndash;&gt;-->
-<!--                <div class="contact-info mt-3">-->
-<!--                    <h3 th:text="${item.nombre}" style="font-weight: bold; color: #333;"></h3>-->
-<!--                    <p th:text="${item.numero}" style="margin-bottom: 0;"></p>-->
-<!--                    <p th:text="${item.email}"></p>-->
-<!--                </div>-->
-
-<!--                &lt;!&ndash; QR Code &ndash;&gt;-->
-<!--                <div class="qr-code-container">-->
-<!--                    <img th:src="@{${item.qrCodePath}}" alt="QR Code">-->
-<!--                </div>-->
 
 
                 <div class="profile-card position-relative animate__animated animate__fadeInUp">
+
+                    <!-- Notificación de eventos, se muestra solo si el contacto tiene eventos -->
+                    <div class="event-notification" th:if="${contactoTieneEventos[item.id]}">
+                        <i class="fas fa-bell"></i>
+                    </div>
+
                     <!-- Menú de tres puntos en la esquina superior derecha -->
                     <div class="dropdown position-absolute top-0 end-0 mt-2 me-2">
                         <button class="btn p-0 text-dark" type="button" id="dropdownMenuButton-[[${item.id}]]" data-bs-toggle="dropdown" aria-expanded="false">
@@ -407,3 +407,4 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

@@ -6,28 +6,34 @@
     <title>Crear Nuevo Docente</title>
     <!-- Enlaza a Animate.css para animaciones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <!-- Enlaza al CSS personalizado -->
-    <link rel="stylesheet" href="styles.css" />
+    <!-- Enlaza a Bootstrap para estilos básicos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <!-- Enlaza a FontAwesome para los íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 <div class="container mt-5 animate__animated animate__fadeIn">
-    <h1 class="display-6 text-primary animate__animated animate__fadeInDown">Crear Nuevo Docente</h1>
+    <h1 class="display-6 text-primary animate__animated animate__fadeInDown"><i class="fas fa-user-plus me-2"></i>Crear Nuevo Categoria</h1>
 
-    <div class="card shadow-lg p-4 mt-4 rounded-lg animate__animated animate__fadeInUp">
+    <div class="card shadow-lg p-4 mt-4 rounded-4 animate__animated animate__fadeInUp">
         <div class="card-body">
             <form th:action="@{/categorias/save}" th:object="${categoria}" method="post">
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="nombre" class="form-label">Nombre del Docente</label>
+                            <label for="nombre" class="form-label"><i class="fas fa-user me-2"></i>Nombre de la categoria</label>
                             <input type="text" id="nombre" th:field="*{nombre}" class="form-control shadow-sm rounded-pill" placeholder="Escriba el nombre del docente" required>
                         </div>
                     </div>
                 </div>
                 <hr>
                 <div class="d-flex justify-content-start align-items-center">
-                    <button type="submit" class="btn btn-primary shadow-sm rounded-pill me-3">Guardar</button>
-                    <a th:href="@{/categorias}" class="btn btn-outline-secondary shadow-sm rounded-pill">Regresar</a>
+                    <button type="submit" class="btn btn-primary shadow-sm rounded-pill me-3">
+                        <i class="fas fa-save me-2"></i>Guardar
+                    </button>
+                    <a th:href="@{/categorias}" class="btn btn-outline-secondary shadow-sm rounded-pill">
+                        <i class="fas fa-arrow-left me-2"></i>Regresar
+                    </a>
                 </div>
             </form>
         </div>
@@ -51,6 +57,8 @@
     h1 {
         font-size: 2.5rem;
         color: #007bff;
+        display: flex;
+        align-items: center;
     }
 
     .card {
@@ -77,6 +85,8 @@
     .form-label {
         font-weight: bold;
         color: #333;
+        display: flex;
+        align-items: center;
     }
 
     .form-control {
@@ -97,6 +107,12 @@
         color: #007bff;
         font-weight: bold;
         transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .btn i {
+        font-size: 1.2rem;
     }
 
     .btn:hover {
@@ -143,67 +159,3 @@
     }
 
 </style>
-<!--<!DOCTYPE html>-->
-<!--<html lang="en"-->
-<!--      xmlns:th="http://www.thymeleaf.org"-->
-<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
-<!--      layout:decorate="/layouts/_mainLayout">-->
-
-<!--<div layout:fragment="content" class="container mt-5 animate__animated animate__fadeIn">-->
-<!--    <h1 class="display-6 text-primary animate__animated animate__fadeInDown">Crear nuevo docente</h1>-->
-
-<!--    <div class="card shadow-lg p-4 mt-4 rounded-lg animate__animated animate__fadeInUp">-->
-<!--        <div class="card-body">-->
-<!--            <form th:action="@{/categorias/save}" th:object="${categoria}" method="post">-->
-<!--                <div class="row mb-3">-->
-<!--                    <div class="col-md-6">-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="nombre" class="form-label">Nombre del Docente</label>-->
-<!--                            <input type="text" id="nombre" th:field="*{nombre}" class="form-control shadow-sm rounded-pill" placeholder="Escriba el nombre del docente" required>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <hr>-->
-<!--                <div class="d-flex justify-content-start align-items-center">-->
-<!--                    <button type="submit" class="btn btn-primary shadow-sm rounded-pill me-3">Guardar</button>-->
-<!--                    <a th:href="@{/categorias}" class="btn btn-outline-secondary shadow-sm rounded-pill">Regresar</a>-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--&lt;!&ndash; Estilos CSS y animaciones de Animate.css &ndash;&gt;-->
-<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />-->
-<!--<style>-->
-<!--    .card {-->
-<!--        border-radius: 1rem;-->
-<!--        transition: transform 0.3s ease;-->
-<!--    }-->
-
-<!--    .card:hover {-->
-<!--        transform: translateY(-5px);-->
-<!--    }-->
-
-<!--    .form-control {-->
-<!--        transition: box-shadow 0.3s ease;-->
-<!--    }-->
-
-<!--    .form-control:focus {-->
-<!--        box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);-->
-<!--    }-->
-
-<!--    .btn {-->
-<!--        transition: transform 0.3s ease;-->
-<!--    }-->
-
-<!--    .btn:hover {-->
-<!--        transform: translateY(-3px);-->
-<!--    }-->
-
-<!--    .animate__animated {-->
-<!--        animation-duration: 0.5s;-->
-<!--        animation-delay: 0.2s;-->
-<!--    }-->
-<!--</style>-->
-<!--</html>-->

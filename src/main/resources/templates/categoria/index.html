@@ -1,7 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/_mainLayout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Categorías</title>
+    <!-- Enlaza a Animate.css para animaciones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- Enlaza a Bootstrap para estilos básicos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <!-- Enlaza a FontAwesome para los íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<div layout:fragment="content" class="container mt-5 animate__animated animate__fadeIn">
 
-<div layout:fragment="content" class="container mt-5">
+    <!-- Mensaje de Confirmación -->
     <div th:if="${msg != null}">
         <script>
             Swal.fire({
@@ -12,6 +25,7 @@
         </script>
     </div>
 
+    <!-- Mensaje de Error -->
     <div th:if="${error != null}">
         <script>
             Swal.fire({
@@ -23,44 +37,66 @@
     </div>
 
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="display-6 text-dark">Listado de Categorías</h1>
-        <a th:href="@{/categorias/papelera}" class="btn btn-outline-danger">Ver Papelera de Categorías</a>
-        <a th:href="@{/categorias/create}" class="btn btn-primary btn-lg">Nueva Categoría</a>
+        <h1 class="header-title text-dark display-6"><i class="fas fa-tags me-2"></i>Categorías</h1>
+        <div class="d-flex">
+            <a th:href="@{/categorias/papelera}" class="btn btn-light border shadow-sm rounded-pill me-3">
+                <i class="fas fa-trash-alt me-2"></i>Papelera
+            </a>
+            <a th:href="@{/categorias/create}" class="btn btn-primary shadow-sm rounded-pill">
+                <i class="fas fa-plus-circle me-2"></i>Nueva Categoría
+            </a>
+        </div>
     </div>
 
     <div class="row">
-        <div class="col-md-4 mb-4" th:each="categoria : ${categorias}">
-            <div class="card shadow-lg">
-                <div class="card-header bg-primary text-white">
-                    <h5 th:text="${categoria.nombre}"></h5>
+        <div class="col-md-4 mb-4 animate__animated animate__fadeInUp" th:each="categoria : ${categorias}">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0 text-primary" th:text="${categoria.nombre}"></h5>
+                    <span class="badge bg-secondary" th:text="${#lists.size(categoria.contactos)} + ' Contactos'"></span>
                 </div>
                 <div class="card-body">
-                    <p><strong>Contactos:</strong></p>
-                    <ul class="list-group">
-                        <li class="list-group-item" th:each="contacto : ${categoria.contactos}" th:text="${contacto.nombre}"></li>
+                    <p class="text-muted mb-2"><i class="fas fa-address-book me-2"></i><strong>Contactos:</strong></p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item ps-0 border-0" th:each="contacto : ${categoria.contactos}" th:text="${contacto.nombre}"></li>
                     </ul>
-                        <a th:href="@{/categorias/details/{id}(id=${categoria.id})}" class="btn btn-secondary btn-sm mt-2">Detalles</a>
-                        <a th:href="@{/categorias/edit/{id}(id=${categoria.id})}" class="btn btn-info btn-sm mt-2">Editar</a>
-                    <a th:href="@{/categorias/remove/{id}(id=${categoria.id})}" class="btn btn-danger btn-sm mt-2">Eliminar</a>
+                </div>
+                <div class="card-footer bg-white border-0 d-flex justify-content-between">
+<!--                    <a th:href="@{/categorias/edit/{id}(id=${categoria.id})}" class="btn btn-outline-success btn-sm">-->
+<!--                        <i class="fas fa-edit me-2"></i>Editar-->
+<!--                    </a>-->
+                    <a th:href="@{/categorias/remove/{id}(id=${categoria.id})}" class="btn btn-outline-danger btn-sm">
+                        <i class="fas fa-trash-alt me-2"></i>Eliminar
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <nav aria-label="Page navigation example">
+    <!-- Paginación -->
+    <nav aria-label="Page navigation example" class="mt-4">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:each="pageNumber : ${pageNumbers}">
-                <a class="page-link" th:href="@{|/categorias?page=${pageNumber}|}" th:text="${pageNumber}"></a>
+                <a class="page-link shadow-sm rounded-pill" th:href="@{|/categorias?page=${pageNumber}|}" th:text="${pageNumber}"></a>
             </li>
         </ul>
     </nav>
 </div>
 
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 <style>
     .card {
-        border-radius: 1rem;
+        border-radius: 15px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        border-bottom: none;
+        background-color: transparent;
     }
 
     .card-body {
@@ -68,7 +104,224 @@
     }
 
     .list-group-item {
-        border: none;
         padding: 0.5rem 0;
+        background-color: transparent;
+        border: none;
+    }
+
+    .header-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+    }
+
+    .btn-outline-primary, .btn-outline-success, .btn-outline-danger {
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: #ffffff;
+    }
+
+    .btn-outline-success:hover {
+        background-color: #28a745;
+        color: #ffffff;
+    }
+
+    .btn-outline-danger:hover {
+        background-color: #dc3545;
+        color: #ffffff;
+    }
+
+    .pagination .page-link {
+        border-radius: 50px;
+        padding: 0.5rem 1rem;
+        color: #007bff;
+        transition: background-color 0.3s ease;
+    }
+
+    .pagination .page-link:hover {
+        background-color: #0056b3;
+        color: white;
+    }
+
+    .badge {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.6rem;
+    }
+
+    .card-footer .btn {
+        width: 48%;
     }
 </style>
+</body>
+</html>
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/_mainLayout">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Listado de Categorías</title>-->
+<!--    &lt;!&ndash; Enlaza a Animate.css para animaciones &ndash;&gt;-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />-->
+<!--    &lt;!&ndash; Enlaza a Bootstrap para estilos básicos &ndash;&gt;-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">-->
+<!--    &lt;!&ndash; Enlaza a FontAwesome para los íconos &ndash;&gt;-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div layout:fragment="content" class="container mt-5 animate__animated animate__fadeIn">-->
+
+<!--    &lt;!&ndash; Mensaje de Confirmación &ndash;&gt;-->
+<!--    <div th:if="${msg != null}">-->
+<!--        <script>-->
+<!--            Swal.fire({-->
+<!--                title: "Confirmación",-->
+<!--                text: '[[${msg}]]',-->
+<!--                icon: "success"-->
+<!--            });-->
+<!--        </script>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Mensaje de Error &ndash;&gt;-->
+<!--    <div th:if="${error != null}">-->
+<!--        <script>-->
+<!--            Swal.fire({-->
+<!--                title: "Error",-->
+<!--                text: '[[${error}]]',-->
+<!--                icon: "error"-->
+<!--            });-->
+<!--        </script>-->
+<!--    </div>-->
+
+<!--    <div class="d-flex justify-content-between align-items-center mb-4">-->
+<!--        <h1 class="header-title text-dark display-6">Categorías</h1>-->
+<!--        <div class="d-flex">-->
+<!--            <a th:href="@{/categorias/papelera}" class="btn btn-light border shadow-sm rounded-pill me-3">-->
+<!--                <i class="fas fa-trash-alt me-2"></i>Papelera-->
+<!--            </a>-->
+<!--            <a th:href="@{/categorias/create}" class="btn btn-primary shadow-sm rounded-pill">-->
+<!--                <i class="fas fa-plus-circle me-2"></i>Nueva Categoría-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="row">-->
+<!--        <div class="col-md-4 mb-4 animate__animated animate__fadeInUp" th:each="categoria : ${categorias}">-->
+<!--            <div class="card h-100 border-0 shadow-sm">-->
+<!--                <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">-->
+<!--                    <h5 class="card-title mb-0 text-primary" th:text="${categoria.nombre}"></h5>-->
+<!--                    <span class="badge bg-secondary" th:text="${#lists.size(categoria.contactos)} + ' Contactos'"></span>-->
+<!--                </div>-->
+<!--                <div class="card-body">-->
+<!--                    <p class="text-muted mb-2"><strong>Contactos:</strong></p>-->
+<!--                    <ul class="list-group list-group-flush">-->
+<!--                        <li class="list-group-item ps-0 border-0" th:each="contacto : ${categoria.contactos}" th:text="${contacto.nombre}"></li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--                <div class="card-footer bg-white border-0 d-flex justify-content-between">-->
+<!--&lt;!&ndash;                    <a th:href="@{/categorias/details/{id}(id=${categoria.id})}" class="btn btn-outline-primary btn-sm">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <i class="fas fa-info-circle me-2"></i>Detalles&ndash;&gt;-->
+<!--&lt;!&ndash;                    </a>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <a th:href="@{/categorias/edit/{id}(id=${categoria.id})}" class="btn btn-outline-success btn-sm">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <i class="fas fa-edit me-2"></i>Editar&ndash;&gt;-->
+<!--&lt;!&ndash;                    </a>&ndash;&gt;-->
+<!--                    <a th:href="@{/categorias/remove/{id}(id=${categoria.id})}" class="btn btn-outline-danger btn-sm">-->
+<!--                        <i class="fas fa-trash-alt me-2"></i>Eliminar-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Paginación &ndash;&gt;-->
+<!--    <nav aria-label="Page navigation example" class="mt-4">-->
+<!--        <ul class="pagination justify-content-center">-->
+<!--            <li class="page-item" th:each="pageNumber : ${pageNumbers}">-->
+<!--                <a class="page-link shadow-sm rounded-pill" th:href="@{|/categorias?page=${pageNumber}|}" th:text="${pageNumber}"></a>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </nav>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Enlaza a Animate.css para animaciones &ndash;&gt;-->
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />-->
+<!--&lt;!&ndash; Enlaza a Bootstrap para estilos básicos &ndash;&gt;-->
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">-->
+<!--&lt;!&ndash; Enlaza a FontAwesome para los íconos &ndash;&gt;-->
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">-->
+<!--<style>-->
+<!--    .card {-->
+<!--        border-radius: 15px;-->
+<!--        transition: transform 0.3s ease, box-shadow 0.3s ease;-->
+<!--    }-->
+
+<!--    .card:hover {-->
+<!--        transform: translateY(-5px);-->
+<!--        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);-->
+<!--    }-->
+
+<!--    .card-header {-->
+<!--        border-bottom: none;-->
+<!--        background-color: transparent;-->
+<!--    }-->
+
+<!--    .card-body {-->
+<!--        padding: 1.5rem;-->
+<!--    }-->
+
+<!--    .list-group-item {-->
+<!--        padding: 0.5rem 0;-->
+<!--        background-color: transparent;-->
+<!--        border: none;-->
+<!--    }-->
+
+<!--    .header-title {-->
+<!--        font-size: 2.5rem;-->
+<!--        font-weight: bold;-->
+<!--    }-->
+
+<!--    .btn-outline-primary, .btn-outline-success, .btn-outline-danger {-->
+<!--        transition: background-color 0.3s ease, color 0.3s ease;-->
+<!--    }-->
+
+<!--    .btn-outline-primary:hover {-->
+<!--        background-color: #007bff;-->
+<!--        color: #ffffff;-->
+<!--    }-->
+
+<!--    .btn-outline-success:hover {-->
+<!--        background-color: #28a745;-->
+<!--        color: #ffffff;-->
+<!--    }-->
+
+<!--    .btn-outline-danger:hover {-->
+<!--        background-color: #dc3545;-->
+<!--        color: #ffffff;-->
+<!--    }-->
+
+<!--    .pagination .page-link {-->
+<!--        border-radius: 50px;-->
+<!--        padding: 0.5rem 1rem;-->
+<!--        color: #007bff;-->
+<!--        transition: background-color 0.3s ease;-->
+<!--    }-->
+
+<!--    .pagination .page-link:hover {-->
+<!--        background-color: #0056b3;-->
+<!--        color: white;-->
+<!--    }-->
+
+<!--    .badge {-->
+<!--        font-size: 0.9rem;-->
+<!--        padding: 0.4rem 0.6rem;-->
+<!--    }-->
+
+<!--    .card-footer .btn {-->
+<!--        width: 32%;-->
+<!--    }-->
+<!--</style>-->
+<!--</body>-->
+<!--</html>-->

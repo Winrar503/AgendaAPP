@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -56,8 +57,12 @@ public class ContactoService implements IContactoService {
 
     private void generateQRCode(Contacto contacto) {
         try {
-            String qrContent = String.format("Nombre: %s\nEmail: %s\nTeléfono: %s",
-                    contacto.getNombre(), contacto.getEmail(), contacto.getNumero());
+//            String qrContent = String.format("Nombre: %s\nEmail: %s\nTeléfono: %s",
+//                    contacto.getNombre(), contacto.getEmail(), contacto.getNumero());
+
+
+            String qrContent = UriComponentsBuilder.fromHttpUrl("http://localhost:8080/contactos/movil/" + contacto.getId())
+                    .toUriString();
 
             String qrFileName = contacto.getId() + "_qr.png";  // Nombre del archivo QR
             Path uploadPath = Paths.get(qrStoragePath, qrFileName);

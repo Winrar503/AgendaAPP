@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/_mainLayout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Eventos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<div layout:fragment="content" class="container mt-5">
+    <h1 class="text-center">Listado de Eventos</h1>
+
+    <!-- Mensaje de éxito -->
+    <div th:if="${msg != null}">
+        <script>
+            Swal.fire({
+                title: "Éxito",
+                text: '[[${msg}]]',
+                icon: "success",
+                confirmButtonText: "OK"
+            });
+        </script>
+    </div>
+
+    <!-- Botón para agregar evento -->
+    <div class="mb-4 text-center">
+        <a th:href="@{/calendario/crear}" class="btn btn-primary">Crear Evento</a>
+    </div>
+
+    <!-- Mostrar los eventos como tarjetas -->
+    <div class="row">
+        <div class="col-md-4 mb-4" th:each="evento : ${eventos}">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${evento.titulo}">Título del Evento</h5>
+                    <p class="card-text" th:text="${evento.descripcion}">Descripción del Evento</p>
+                    <p class="card-text"><strong>Inicio:</strong> <span th:text="${#temporals.format(evento.inicio, 'dd/MM/yyyy HH:mm')}">Fecha y hora de inicio</span></p>
+                    <p class="card-text"><strong>Fin:</strong> <span th:text="${#temporals.format(evento.fin, 'dd/MM/yyyy HH:mm')}">Fecha y hora de fin</span></p>
+                    <p class="card-text"><strong>Contacto:</strong> <span th:text="${evento.contacto.nombre}">Nombre del Contacto</span></p>
+                </div>
+                <div class="card-footer text-center">
+                    <a th:href="@{/calendario/detalles/{id}(id=${evento.id})}" class="btn btn-info btn-sm">Ver Detalles</a>
+                    <a th:href="@{/calendario/editar/{id}(id=${evento.id})}" class="btn btn-warning btn-sm">Editar</a>
+                    <form th:action="@{/calendario/eliminar/{id}(id=${evento.id})}" method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

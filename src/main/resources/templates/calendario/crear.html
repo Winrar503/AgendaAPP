@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/_mainLayout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Evento</title>
+</head>
+<body>
+<div layout:fragment="content" class="container mt-5">
+    <h1 class="text-center">Crear Evento</h1>
+
+    <form th:action="@{/calendario/guardar}" th:object="${evento}" method="post">
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título</label>
+            <input type="text" class="form-control" id="titulo" th:field="*{titulo}" required>
+        </div>
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea class="form-control" id="descripcion" th:field="*{descripcion}" rows="3" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="inicio" class="form-label">Inicio</label>
+            <input type="datetime-local" class="form-control" id="inicio" th:field="*{inicio}" required>
+        </div>
+        <div class="mb-3">
+            <label for="fin" class="form-label">Fin</label>
+            <input type="datetime-local" class="form-control" id="fin" th:field="*{fin}" required>
+        </div>
+        <div class="mb-3">
+            <label for="contacto" class="form-label">Contacto</label>
+            <select class="form-control" id="contacto" th:field="*{contacto.id}" required>
+                <option th:each="contacto : ${contactos}" th:value="${contacto.id}" th:text="${contacto.nombre}">Contacto</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</div>
+</body>
+</html>

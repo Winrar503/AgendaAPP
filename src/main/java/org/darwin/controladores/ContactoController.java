@@ -5,6 +5,7 @@ import org.darwin.modelos.Contacto;
 import org.darwin.modelos.Nota;
 import org.darwin.servicios.implementaciones.CategoriaService;
 import org.darwin.servicios.interfaces.IContactoService;
+import org.darwin.servicios.interfaces.IEventoService;
 import org.darwin.servicios.interfaces.INotaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,9 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -38,6 +37,8 @@ public class ContactoController {
     @Autowired
     private INotaService notaService;
 
+    @Autowired
+    private IEventoService eventoService;
 
 
 
@@ -50,7 +51,17 @@ public class ContactoController {
         //Filtrar todos los contactos que  ya esten elimido
         Page<Contacto> contactos = contactoService.buscarTodosNoEliminadosPaginados(pageable);
 
+        // Mapa para saber si un contacto tiene eventos
+        Map<Integer, Boolean> contactoTieneEventos = new HashMap<>();
+        for (Contacto contacto : contactos) {
+            boolean tieneEventos = !eventoService.obtenerEventosPorContacto(contacto.getId()).isEmpty();
+            contactoTieneEventos.put(contacto.getId(), tieneEventos);
+        }
+
+
         model.addAttribute("contactos", contactos);
+        model.addAttribute("contactoTieneEventos", contactoTieneEventos);
+
 
         int totalPages = contactos.getTotalPages();
         if (totalPages > 0) {

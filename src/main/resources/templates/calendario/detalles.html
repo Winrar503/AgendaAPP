@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Evento</title>
+</head>
+<body>
+<div layout:fragment="content" class="container mt-5">
+    <h1 class="text-center">Detalles del Evento</h1>
+
+    <div class="mb-3">
+        <label class="form-label">Título:</label>
+        <p th:text="${evento.titulo}"></p>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Descripción:</label>
+        <p th:text="${evento.descripcion}"></p>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Fecha y Hora de Inicio:</label>
+        <p th:text="${evento.inicio}"></p>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Fecha y Hora de Fin:</label>
+        <p th:text="${evento.fin}"></p>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Contacto:</label>
+        <p th:text="${evento.contacto.nombre}"></p>
+    </div>
+
+    <div class="mt-4 text-center">
+        <a th:href="@{/calendario/editar/{id}(id=${evento.id})}" class="btn btn-success">Editar</a>
+        <form th:action="@{/calendario/eliminar/{id}(id=${evento.id})}" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
